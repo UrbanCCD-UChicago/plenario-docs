@@ -285,7 +285,5 @@ All query parameters are optional except for `dataset_name`.
 
 ### Response
 
-**See right**
-
-Plenario will output a GeoJSON with a feature for each grid square containing
+**See right**. Plenario will output a GeoJSON with a feature for each grid square containing
 a `count` property of the number of observations within that square.

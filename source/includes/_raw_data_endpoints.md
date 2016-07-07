@@ -99,9 +99,7 @@ All query parameters are optional except for `dataset_name`.
 
 ### Responses
 
-**See right**
-
-The API responds with a list of raw records for the particular dataset. The
+**See right**. The API responds with a list of raw records for the particular dataset. The
 fields returned will vary per dataset. Response is limited to 1000 results,
 which can be paginated by using the `offset` parameter.
 
@@ -180,7 +178,7 @@ For any given parameter above, the query can be modified with [query operators](
 
 ### Responses
 
-**See right**; `weather-stations` gives a list of weather stations and attributes (described above) that match the provided query parameters.
+**See right**. `weather-stations` gives a list of weather stations and attributes (described above) that match the provided query parameters.
 
 ## `GET /v1/api/weather/daily`
 

@@ -64,13 +64,15 @@ One record shape per dataset.
 > ### Example Queries
 
 ```
-http://plenar.io/v1/api/shapes/pedestrian_streets?data_type=json
+http://plenar.io/v1/api/shapes/pedestrian_streets?
+data_type=json
 ```
 
 > Get a GeoJSON document with Chicago's streets that are reserved for pedestrian traffic.
 
 ```
-http://plenar.io/v1/api/shapes/pedestrian_streets?data_type=json&pedestrian_streets__filter={
+http://plenar.io/v1/api/shapes/pedestrian_streets?
+data_type=json&pedestrian_streets__filter={
 "op": "eq", "col": "name", "val": "PEDESTRIAN STREET RETAIL"}
 ```
 
