@@ -1,72 +1,103 @@
-# Advanced Filtering
+# Query Syntax
 
-Users have an alternative way to create dataset specific filters. Utilizing the
-syntax shown on the right, a user can make queries with AND and OR conditions.
+## Time Filtering
+
+> Query over 2015
+
+```
+&obs_date__ge=2015-1-1&obs_date__le=2015-12-31
+```
+
+For endpoints that accept temporal filters, you can provide the query parameters `obs_date__ge` (observation date greater than or equal to) and `obs_date__le` (less than or equal to). Both must be formatted as **YYYY-MM-DD**.
+
+|parameter|description|default
+|---|---|---|
+|`obs_date__ge`|start of date range|90 days ago|
+|`obs_date__le`|end of date range|today|
+
+## Space Filtering
+
+> Query over the author's block
+
+```
+location_geom__within={"type":"Polygon","coordinates":[[[-87.58695602416992,41.79224063145134],[-87.58695602416992,41.7996633276003],[-87.5745964050293,41.7996633276003],[-87.5745964050293,41.79224063145134],[-87.58695602416992,41.79224063145134]]]}
+```
+
+For endpoints that accept spatial filters, you can provide the `location_geom__within` parameter.
+It must be a URL encoded [GeoJSON](http://geojson.org/) polygon or multipolygon.
 
 <aside class="notice">
-    This filter syntax has the added benefit of being able to be nested, allowing 
-    one to up the complexity and specificity of their query.
+    This is a nice site to <a href=http://geojson.org/>generate geojson</a>.
 </aside>
 
-> Dataset Filter Format
+
+## Attribute Operators
+
+When you make a query against a specific dataset,
+you can filter against that dataset's attributes.
+
+You can use the following binary operators:
+
+> LIKE examples:
+>
+> "%rat%" matches "rat poisoning" and "crater".
+> "jo_" matches "joe" and "job" but not "josephine"
+
+|operator|description|
+|---|---|
+|`eq`|equal to (==)|
+|`gt`|greater than (>)|
+|`ge`|greater than or equal to (>=)|
+|`lt`|less than (<)|
+|`le`|less than or equal to (<=)|
+|`ne`|not equal (!=)|
+|`in`|within a list of provided values like `0560,0110`|
+|`like`|Match string pattern|
+|`ilike`|Match string pattern, case insensitive|
+
+> Filter Chicago Department of Health complaints to only return records with the word "asbestos" in the complaint description
 
 ```json
-{"op":"<operator>", "col":"<data_column>", "val":"<numerical value>"}
+{"op":"ilike", "col":"complaint_detail", "val":"%asbestos%"}
 ```
+
+<aside class="notice">
+    like and ilike match patterns using the SQL LIKE operator. That lets you use % and _ as wildcard characters. % matches a string of any length, while _ matches exactly one character.
+</aside>
+
+## Attribute Filtering (New Syntax)
+
+Simple conditions that only apply one operator can be expressed in the following syntax: `{"op":"<operator>", "col":"<column_name>", "val":"<target_value>"}`
+
+> Filter Chicago crimes dataset to only include narcotics crimes that took place on a street or sidewalk
 
 ```json
 {"op": "and", "val": [
-    {"op": "ge", "col": "point_date", "val": "2016-01-01"},
+    {"op": "eq", "col": "primary_type", "val": "NARCOTICS"},
     {"op":"or", "val": [
-        {"op":"eq","col":"iucr","val":"0110"},
-        {"op":"eq","col":"description","val":"CREDIT CARD FRAUD"}
-        ]
-    }
+        {"op":"eq","col":"location_description","val":"STREET"},
+        {"op":"eq","col":"location_description","val":"SIDEWALK"}
+        ]}
     ]
 }
 ```
 
-> Translates to:
+You can also apply ANDs and ORs to conditions with the following syntax:
+`{"op": <"and" or "or">, "val": [<list of conditions>]}`. You can nest conditions arbitrarily deep.
 
-> ... WHERE point_date >= "2016-01-01" AND (iucr = 0110 OR description = "CREDIT CARD FRAUD")
+>Applying filters to the Chicago crimes and Chicago neighborhoods datasets to return homicides from Logan Square and Humboldt Park
+
+```
+plenar.io/v1/api/detail/?dataset_name=crimes_2001_to_present&crimes_2001_to_present__filter={"op": "eq", "col": "primary_type", "val": "HOMICIDE"}&shape=boundaries_neighborhoods&boundaries_neighborhoods__filter={"op": "in", "col": "pri_neigh", "val": "Logan Square,Humboldt Park"}
+```
+
+You can specify filters as query parameters in your GET requests as `<dataset_name>__filter={filter}`.
+You need to specify which dataset a filter applies to because a single query might include more than one dataset.
+
+## Attribute Filtering (Old Syntax)
+
 
 <aside class="warning">
-    You cannot specify both dataset columns and a dataset filter. If you do,
-    Plenario will ignore the query arguments pertaining to dataset columns and
-    only use the filter argument. It will then issue a warning message in the
-    returned response letting you know the arguments it ignored.
+    You cannot mix the new and old style attribute filtering syntaxes.
+    If you do, Plenario will ignore the old style parameters and only use the new style.
 </aside>
-
-## `"op"`
-
-`"op"` short for **operator**, is used at the beginning of a filter to define 
-which query operator is being used.
-
-```
-"op": "<operator>"
-```
-
-`"op"` is followed by a colon and the chosen operator. These operators are not
-preceded by underscores, as they normally are when specifying columns as query 
-arguments.
-
-The currently available operators are `"eq"`, `"gt"`, `"ge"`, `"lt"`, `"le"`, 
-`"ne"`, `"like"`, `"ilike"`, and `"in"`.
-
-## `"col"`
-
-`"col"` and its value signify which dataset **column** the filter builds a
-condition for.
-
-```
-`"col": "<column_name>"`
-```
-
-## `"val"`
-
-`"val"` sets the target **value** which is used, in combination with op and
-col, to construct a SQL WHERE condition.
-
-```
-`"val": "<target_value>"`
-```

@@ -11,12 +11,13 @@ toc_footers:
   - <a href='http://plenar.io/'>Plenario</a>
 
 includes:
+  - concepts
+  - advanced_filtering
   - response_format
   - metadata_endpoints
   - aggregate_endpoints
   - raw_data_endpoints
   - shape_data_endpoints
-  - advanced_filtering
 
 search: true
 ---
@@ -28,19 +29,18 @@ search: true
 Plenario is a centralized hub for open datasets from around the world, ready to search and download.
 
 <aside class=info>
-    The easiest way to access Plenario’s data and to build your
-    own queries is via the <a href="http://plenar.io/explore/discover">Data
-    Explorer</a>. Also, you can take a look at some <a
-    href="http://plenar.io/examples">example</a> queries.
+    If you'd rather access Plenario’s data through a visual interface,
+    check out the <a href="http://plenar.io/explore/discover">Data
+    Explorer</a>.
 </aside>
 
 **For developers:**
 
-The Plenario RESTful API can be used to perform custom geospatial and temporal queries. We currently have 13 endpoints.
+The Plenario RESTful API can be used to perform custom geospatial and temporal queries.
 
 A few things to know:
 
 * All API calls should be made with `HTTP GET`
 * All methods are accessed via: `http://plenar.io/v1/api/SOME-ENDPOINT`
 * All API responses default to [JSON format](http://www.json.org/), but you can
-specify alternate datatypes specific to some endpoints.
+specify alternate formats specific to some endpoints.
