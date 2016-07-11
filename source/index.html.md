@@ -15,6 +15,7 @@ includes:
   - query_syntax
   - response_format
   - metadata_endpoints
+  - event_data
   - aggregate_endpoints
   - raw_data_endpoints
   - shape_data_endpoints
