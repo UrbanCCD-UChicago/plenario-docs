@@ -95,7 +95,7 @@ You can use the following binary operators:
     like and ilike match patterns using the SQL LIKE operator. That lets you use % and _ as wildcard characters. % matches a string of any length, while _ matches exactly one character.
 </aside>
 
-## Attribute Filtering (New Syntax)
+## Attribute Filtering
 
 > Filter Chicago Department of Health complaints to only return records with the word "asbestos" in the complaint description
 
@@ -132,6 +132,19 @@ You need to specify which dataset a filter applies to because a single query mig
 
 ## Attribute Filtering (Old Syntax)
 
+_This syntax is deprecated._
+
+```
+pri_neigh__in=%3DLogan%20Square%2CHumboldt%20Park
+```
+
+The original method for applying conditions to attributes of a dataset
+is to provide one query parameter for each condition in the form of
+`[col]__[op]=[val]`.
+The trouble with this syntax is that you can't specify
+whether you want to combine the conditions with ANDs or ORs.
+So this syntax assumes you just want to AND things together.
+You also can't specify which dataset a condition should apply to.
 
 <aside class="warning">
     You cannot mix the new and old style attribute filtering syntaxes.
