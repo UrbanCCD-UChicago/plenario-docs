@@ -8,7 +8,7 @@
 http://plenar.io/v1/api/datasets/
 ```
 
-> List of all Plenario's datasets.
+> List of all event datasets.
 
 > ### Example Response
 
@@ -63,19 +63,30 @@ http://plenar.io/v1/api/datasets/
 }
 ```
 
-This is the "data about the data" endpoint. It contains a record for each dataset; use this endpoint to list available datasets and metadata.
+Used to list available event datasets and fetch their metadata.
 
-### Query Parameters
+### Bounding Boxes
 
-All query parameters are optional.
+Each event dataset's metadata contains a spatial and temporal bounding box,
+the smallest timespan and rectangle in which all events in the dataset are contained.
+If you apply spatial or temporal filters to this endpoint,
+it will only return datasets with events that fell within your filters.
+It is often helpful to use these bounding boxes
+to narrow down a search over all the datasets in Plenario.
 
-|**Parameter Name**  | **Parameter Default** | **Parameter Description**|
-|--------------- | ----------------- | :--------------------|
-|**dataset_name**  | none              | Machine version of a specific dataset name|
+### Common Query Syntax
+
+By default, this endpoint returns every available event dataset.
+
+|**Parameter Name**  | **Required?** | **Default**
+|--------------- | -----------------| ---
+|**dataset_name**/**dataset_name__in**  | no | none
+|**location_geom__within** | no | none
+|**obs_date__ge** & **obs_date__le**| no | none
 
 ### Response
 
-One record shape per dataset.
+One record per event dataset.
 
 | **Attribute Name** 	| **Attribute Description**                                                                   	|
 |----------------	|------------------------------------------------------------------------------------------	|
@@ -86,6 +97,74 @@ One record shape per dataset.
 | **human_name**     	| Human-friendly name for the dataset.                                                     	|
 | **dataset_name**   	| Machine name for the dataset. Values are passed into the queries below as `dataset_name` 	|
 | **update_freq**    	| Update frequency.                                                                        	|
+
+## `GET /v1/api/shapes`
+
+> ### Example Query
+
+```
+http://plenar.io/v1/api/shapes/
+```
+
+> This query yields information about every shape dataset.
+
+> ### Example Response
+
+```json
+{
+    "meta": {
+        "status": "ok",
+        "message": ""
+    },
+    "objects": [
+        {
+            "attribution": "City of Chicago",
+            "description": "Major streets in Chicago. ",
+            "view_url": "",
+            "num_shapes": 16065,
+            "source_url": "https://data.cityofchicago.org/download/ueqs-5wr6/application/zip",
+            "bbox": "{\"type\":\"Polygon\",\"coordinates\":[...]}",
+            "date_added": "2016-04-20",
+            "human_name": "Major Streets",
+            "dataset_name": "major_streets",
+            "update_freq": "yearly"
+        },
+        ...
+    ]
+}
+```
+
+Used to list available shape datasets and fetch their metadata.
+
+### Bounding Boxes
+
+Each shape dataset's metadata contains a spatial bounding box,
+the smallest rectangle in which all shapes in the dataset are contained.
+If you apply a spatial filter to this endpoint,
+it only returns datasets with shapes within the box.
+Furthermore, the `num_shapes` response parameter will only
+count the shapes that were contained by or intersected your filter.
+
+### Common Query Syntax
+
+Specify `location_geom_within` to only view metadata about shape datasets in a particular area.
+
+| Parameter Name       | Required? | Default                                                           |
+|----------------------|-------------------|---------------------------------------------------------------------------------|
+| **location_geom_within** | no             | None |
+
+### Responses
+
+One record shape per dataset.
+
+| Attribute Name | Attribute Description                                         |
+|----------------|---------------------------------------------------------------|
+| **description**    | Verbose, official description of the dataset.                 |
+| **source_url**     | If available, the URL where the data was originally sourced.  |
+| **update_freq**    | Update frequency                                              |
+| **dataset_name**   | the name by which you can query the shape dataset             |
+| **human_name**     | a nicer name to refer to the shape dataset in user interfaces |
+| **date_added**     | the date the shape dataset was added to Plenario              |
 
 ## `GET /v1/api/fields/<dataset_name>/`
 

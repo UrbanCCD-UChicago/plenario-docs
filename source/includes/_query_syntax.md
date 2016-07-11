@@ -30,6 +30,12 @@ It must be a URL encoded [GeoJSON](http://geojson.org/) polygon or multipolygon.
     This is a nice site to <a href=http://geojson.org/>generate geojson</a>.
 </aside>
 
+## Specifying a Dataset
+
+Many endpoints require you to specify a dataset to query.
+In that case, specify the `dataset_name` query parameter.
+If you can specify more than one dataset, you can use `dataset_name__in`
+to provide a list of dataset names.
 
 ## Attribute Operators
 

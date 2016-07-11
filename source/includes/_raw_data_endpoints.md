@@ -1,23 +1,5 @@
 # Raw Data Endpoints
 
-## Query Operators for Raw Data
-
-This list of **Query Operators** can be used for any given query `dataset_field` or query parameter provided by the raw data endpoints (besides syntactical exceptions; `__like` and `__ilike` cannot be used with integers, for example).  
-
-<aside class="notice">For example, <code>ward__ge=48</code> translates to "ward >= 48" in SQL</aside>
-
-| Operator | Description                                                          |
-|----------|----------------------------------------------------------------------|
-| **__gt**     | greater than (`>`)                                                   |
-| **__ge**     | greater than or equal to (`>=`)                                      |
-| **__lt**     | less than (`<`)                                                      |
-| **__le**     | less than or equal to (`<=`)                                         |
-| **__ne**     | not equal (`!=`)                                                     |
-| **__like**   | like value with % wildcards, case sensitive (`LIKE`, `'State%'`)     |
-| **__ilike**  | like value with % wildcards, case insensitive (`ILIKE`,  `'state%'`) |
-| **__in**     | within a list of provided values (`IN ('list', 'of', 'values')`)     |  
-| **__eq**  |  equal to (`=`) |
-
 ## `GET /v1/api/detail`
 
 > ### Example Query

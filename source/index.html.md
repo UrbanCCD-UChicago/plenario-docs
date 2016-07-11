@@ -12,7 +12,7 @@ toc_footers:
 
 includes:
   - concepts
-  - advanced_filtering
+  - query_syntax
   - response_format
   - metadata_endpoints
   - aggregate_endpoints
