@@ -1,12 +1,11 @@
-# Event Data Endpoints
+# Event Data Queries
 
 ## `GET /v1/api/detail`
 
 > ### Example Query
 
 ```
-http://plenar.io/v1/api/detail/?dataset_name=crimes_2001_
-to_present&obs_date__ge=2016-5-1&iucr=0110
+http://plenar.io/v1/api/detail/?dataset_name=crimes_2001_to_present&obs_date__ge=2016-5-1&crimes_2001_to_present__filter={"op": "eq", ""}
 ```
 
 > A list of all Chicago homicides (IUCR code 0110) since May 1<sup>st</sup>, 2016
@@ -70,17 +69,39 @@ Query a particular dataset and get back the raw individual records.
 |**dataset_name** | yes | n/a
 |**location_geom__within** | no | none
 |**obs_date__ge** & **obs_date__le**| no | 90 days ago - today
-|**[dataset_name]__filter** or **[dataset_name]__[operator]**| no | none
+|**[dataset_name]__filter**| no | none
 
-### Query Parameters
-
-All query parameters are optional except for `dataset_name`.
+### Endpoint-Specific Parameters
 
 | Parameter Name       | Parameter Default | Parameter Description                                                                                                                                                                                              |
 |----------------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **data_type**            | json              | Response data format. Current options are `json`, `geojson` and `csv`                                                                                                                                                         |
-| **geom**                 | none              | Join to a shape dataset; columns in the shape dataset can also be used as filters with the `[dataset_field]*` parameter                                                                                            |
+| **shape**                 | none              | Filter with a shape dataset                                                                                           |
 | **offset**               | none              | Used to paginate through results of more than 1000.  Example: `offset=1000` will fetch the second page of results.                                                                                  |
+
+### Filtering with a Shape Dataset
+
+```
+&shape=boundaries_neighborhoods&boundaries_neighborhoods__filter={"op": "eq", "col": "pri_neigh", "val": "Logan Square"}
+```
+
+Use the `shape` parameter to specify the name of a shape dataset.
+Then the endpoint will only return events
+that intersect or are contained by shapes in the dataset.
+This feature is particularly useful when you apply filters to the dataset
+by adding a `<shape_dataset_name>__filter` parameter.
+For example, you can specify the Chicago neighborhoods shape dataset
+and specify a neighborhood in your filter to only fetch events from one neighborhood.
+
+### Response Formatting
+
+By default, this endpoint returns data exactly as it was written in the source dataset.
+Behind the scenes, Plenario parses event datasets' latitude and longitude columns
+to produce a geometry column that it uses internally.
+If you want to get the geometry Plenario has parsed,
+use the `data_type` parameter to specify `geojson`.
+Plenario will return each record as a GeoJSON point with the parsed latitude and longitude in the `coordinates` object and the original values in the `attributes` object.
+
 
 ### Responses
 
@@ -95,4 +116,4 @@ which can be paginated by using the `offset` parameter.
 | **query**          | Shows values used in the query.                        |
 | **message**        | Reports errors or warnings (if any).                   |
 | **total**          | Total number of records found.                         |
-| **_objects_**      | Contains row values of raw dataset information.        |
+| **_objects_**      | Contains records        |

@@ -5,10 +5,10 @@ language_tabs:
   - html: Examples
 
 toc_footers:
-  - <a href='https://github.com/tripit/slate'>Slate</a>
   - <a href='http://www.urbanccd.org/#urbanccd'>UrbanCCD</a>
   - <a href='http://www.uchicago.edu/'>University of Chicago</a>
   - <a href='http://plenar.io/'>Plenario</a>
+  - Docs powered by <a href='https://github.com/tripit/slate'>Slate</a>
 
 includes:
   - concepts
@@ -37,7 +37,7 @@ Plenario is a centralized hub for open datasets from around the world, ready to 
 
 **For developers:**
 
-The Plenario RESTful API can be used to perform custom geospatial and temporal queries.
+The Plenario API can be used to perform custom geospatial and temporal queries.
 
 A few things to know:
 
