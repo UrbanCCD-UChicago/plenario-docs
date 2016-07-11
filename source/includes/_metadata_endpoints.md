@@ -91,12 +91,16 @@ One record per event dataset.
 | **Attribute Name** 	| **Attribute Description**                                                                   	|
 |----------------	|------------------------------------------------------------------------------------------	|
 | **description**    	| Verbose, official description of the dataset.                                            	|
+|**attribution**| The data provider
 | **source_url**     	| If available, the URL where the data was originally sourced.                             	|
+|**view_url**| A URL where you can learn more about the dataset.
+|**columns**| Name and type of each column.
 | **obs_from**       	| Oldest date available in the dataset.                                                     	|
 | **obs_to**         	| Newest date available in the dataset.                                                    	|
+|**bbox**| The smallest rectangle that contains every event in this dataset. (GeoJSON polygon)
 | **human_name**     	| Human-friendly name for the dataset.                                                     	|
-| **dataset_name**   	| Machine name for the dataset. Values are passed into the queries below as `dataset_name` 	|
-| **update_freq**    	| Update frequency.                                                                        	|
+| **dataset_name**   	| Machine name for the dataset. The name you need to supply in other endpoints.
+| **update_freq**    	| How often Plenario checks the source dataset for updates.                                                                        	|
 
 ## `GET /v1/api/shapes`
 
@@ -127,7 +131,8 @@ http://plenar.io/v1/api/shapes/
             "date_added": "2016-04-20",
             "human_name": "Major Streets",
             "dataset_name": "major_streets",
-            "update_freq": "yearly"
+            "update_freq": "yearly",
+            "columns": [{"field_type": "VARCHAR", "field_name": "street_nam"},{"field_type": "VARCHAR", "field_name": "direction"}, ...]
         },
         ...
     ]
@@ -155,12 +160,13 @@ Specify `location_geom_within` to only view metadata about shape datasets in a p
 
 ### Responses
 
-One record shape per dataset.
+One record per shape dataset.
 
 | Attribute Name | Attribute Description                                         |
 |----------------|---------------------------------------------------------------|
 | **description**    | Verbose, official description of the dataset.                 |
 | **source_url**     | If available, the URL where the data was originally sourced.  |
+|**columns**| Name and type of each column.
 | **update_freq**    | Update frequency                                              |
 | **dataset_name**   | the name by which you can query the shape dataset             |
 | **human_name**     | a nicer name to refer to the shape dataset in user interfaces |
@@ -176,7 +182,11 @@ http://plenar.io/v1/api/fields/crimes_2001_to_present/
 
 > Field definitions for Chicago crime report dataset
 
-Gives you a listing of all the fields and their data types for the given dataset. This is useful for figuring out how to structure a query against the `/v1/api/detail/`, `/v1/api/shapes/`, or `/v1/api/detail-aggregate/` endpoints.
+_This endpoint is deprecated in favor of `/datasets`._
+
+Given an event dataset name, return all fields and their types.
+
+Gives you a listing of all the fields and their data types for the given dataset.
 
 ### Query Parameters
 

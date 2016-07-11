@@ -39,8 +39,37 @@ to provide a list of dataset names.
 
 ## Attribute Operators
 
+> Use the columns information from each dataset's metadata
+> to find the name
+
+
+```json
+...
+"columns": [
+    {
+        "field_type": "DOUBLE PRECISION",
+        "field_name": "shape_area"
+    },
+    {
+        "field_type": "VARCHAR",
+        "field_name": "pri_neigh"
+    },
+    {
+        "field_type": "VARCHAR",
+        "field_name": "sec_neigh"
+    },
+    {
+        "field_type": "DOUBLE PRECISION",
+        "field_name": "shape_len"
+    }
+
+], ...
+```
+
 When you make a query against a specific dataset,
-you can filter against that dataset's attributes.
+you can filter against that dataset's attributes
+You can find out the name and types of each dataset's attributes
+through the event and shape metadata endpoints.
 
 You can use the following binary operators:
 
@@ -61,17 +90,18 @@ You can use the following binary operators:
 |`like`|Match string pattern|
 |`ilike`|Match string pattern, case insensitive|
 
-> Filter Chicago Department of Health complaints to only return records with the word "asbestos" in the complaint description
-
-```json
-{"op":"ilike", "col":"complaint_detail", "val":"%asbestos%"}
-```
 
 <aside class="notice">
     like and ilike match patterns using the SQL LIKE operator. That lets you use % and _ as wildcard characters. % matches a string of any length, while _ matches exactly one character.
 </aside>
 
 ## Attribute Filtering (New Syntax)
+
+> Filter Chicago Department of Health complaints to only return records with the word "asbestos" in the complaint description
+
+```json
+{"op":"ilike", "col":"complaint_detail", "val":"%asbestos%"}
+```
 
 Simple conditions that only apply one operator can be expressed in the following syntax: `{"op":"<operator>", "col":"<column_name>", "val":"<target_value>"}`
 

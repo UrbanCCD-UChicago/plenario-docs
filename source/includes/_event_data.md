@@ -2,15 +2,11 @@
 
 ## `GET /v1/api/detail`
 
-> ### Example Query
+> All Chicago homicides since May 1<sup>st</sup>, 2016
 
 ```
-http://plenar.io/v1/api/detail/?dataset_name=crimes_2001_to_present&obs_date__ge=2016-5-1&crimes_2001_to_present__filter={"op": "eq", ""}
+http://plenar.io/v1/api/detail/?dataset_name=crimes_2001_to_present&obs_date__ge=2016-5-1&crimes_2001_to_present__filter={"op": "eq", "col": "primary_type", "val": "HOMICIDE"}
 ```
-
-> A list of all Chicago homicides (IUCR code 0110) since May 1<sup>st</sup>, 2016
-
-> ### Example Response
 
 ```json
 {
@@ -79,7 +75,24 @@ Query a particular dataset and get back the raw individual records.
 | **shape**                 | none              | Filter with a shape dataset                                                                                           |
 | **offset**               | none              | Used to paginate through results of more than 1000.  Example: `offset=1000` will fetch the second page of results.                                                                                  |
 
+### Responses
+
+**See right**. The API responds with a list of raw records for the particular dataset. The
+fields returned will vary per dataset. Response is limited to 1000 results,
+which can be paginated by using the `offset` parameter.
+
+| **Attribute Name** | **Attribute Description**                              |
+| ------------------ | ------------------------------------------------------ |
+| **_meta_**         |                                                        |
+| - **status**         | Indicates query success, can be `ok` or `error`.       |
+| - **query**          | Shows values used in the query.                        |
+| - **message**        | Reports errors or warnings (if any).                   |
+| - **total**          | Total number of records found.                         |
+| **_objects_**      | Contains records        |
+
 ### Filtering with a Shape Dataset
+
+> Only return events that happened in Logan Square
 
 ```
 &shape=boundaries_neighborhoods&boundaries_neighborhoods__filter={"op": "eq", "col": "pri_neigh", "val": "Logan Square"}
@@ -101,19 +114,3 @@ to produce a geometry column that it uses internally.
 If you want to get the geometry Plenario has parsed,
 use the `data_type` parameter to specify `geojson`.
 Plenario will return each record as a GeoJSON point with the parsed latitude and longitude in the `coordinates` object and the original values in the `attributes` object.
-
-
-### Responses
-
-**See right**. The API responds with a list of raw records for the particular dataset. The
-fields returned will vary per dataset. Response is limited to 1000 results,
-which can be paginated by using the `offset` parameter.
-
-| **Attribute Name** | **Attribute Description**                              |
-| ------------------ | ------------------------------------------------------ |
-| **_meta_**         |                                                        |
-| **status**         | Indicates query success, can be `ok` or `error`.       |
-| **query**          | Shows values used in the query.                        |
-| **message**        | Reports errors or warnings (if any).                   |
-| **total**          | Total number of records found.                         |
-| **_objects_**      | Contains records        |

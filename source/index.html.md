@@ -16,6 +16,9 @@ includes:
   - response_format
   - metadata_endpoints
   - event_data
+  - shape_data
+  - temporal_aggregation
+  - spatial_aggregation
   - aggregate_endpoints
   - raw_data_endpoints
   - shape_data_endpoints
@@ -34,8 +37,6 @@ Plenario is a centralized hub for open datasets from around the world, ready to 
     check out the <a href="http://plenar.io/explore/discover">Data
     Explorer</a>.
 </aside>
-
-**For developers:**
 
 The Plenario API can be used to perform custom geospatial and temporal queries.
 
