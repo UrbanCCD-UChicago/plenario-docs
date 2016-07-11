@@ -19,9 +19,7 @@ includes:
   - shape_data
   - temporal_aggregation
   - spatial_aggregation
-  - aggregate_endpoints
-  - raw_data_endpoints
-  - shape_data_endpoints
+  - weather
 
 search: true
 ---
