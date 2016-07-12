@@ -11,6 +11,7 @@ toc_footers:
   - Docs powered by <a href='https://github.com/tripit/slate'>Slate</a>
 
 includes:
+  - plenario
   - concepts
   - query_syntax
   - response_format

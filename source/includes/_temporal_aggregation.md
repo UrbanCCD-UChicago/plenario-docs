@@ -123,13 +123,11 @@ Many of the metadata attributes from `/datasets` are included as well.
 
 | **Attribute Name** | **Attribute Description**                              |
 | ------------------ | ------------------------------------------------------ |
-| **status**         | Indicates query success, can be `ok` or `error`.       |
-| **query**          | Shows values used in the query.                        |
-| **message**        | Reports errors or warnings (if any).                   |
 | **dataset_name**   | The dataset this timeseries was created from.          |
-| **count**          | Total number of records found.  |
-| **datetime**       | Date of aggregation
-| **items**          | Counts of aggregated records and delimiting datetimes. |
+| **count**          | Total number of records found within the subset specified by the query. |
+| **items**          | Subcounts of aggregated records and each `datetime` of aggregation. |
+
+
 
 ## `GET v1/api/detail-aggregate/`
 

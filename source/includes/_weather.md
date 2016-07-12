@@ -2,15 +2,11 @@
 
 ## `GET v1/api/weather-stations/`
 
-> ### Example Query
+> A list of weather stations in Illinois.
 
 ```
 http://plenar.io/v1/api/weather-stations/?state=IL
 ```
-
-> A list of weather stations in Illinois.
-
-> ### Example Response
 
 ```json
 {
@@ -70,15 +66,11 @@ For any given parameter above, the query can be modified with [query operators](
 
 ## `GET /v1/api/weather/daily`
 
-> ### Example Query
+> All daily weather observations at Chicago's Midway Airport (WBAN code 14819, `station_name` CHICAGO/MIDWAY) since June 1<sup>st</sup>, 2016.
 
 ```
 http://plenar.io/v1/api/weather/daily/?wban_code=14819&date__ge=2016-06-01
 ```
-
-> All daily weather observations at Chicago's Midway Airport (WBAN code 14819, `station_name` CHICAGO/MIDWAY) since June 1<sup>st</sup>, 2016.
-
-> ### Example Response
 
 ```json
 {
@@ -189,14 +181,11 @@ For any given parameter above, the query can be modified with [query operators](
 
 ## `GET /v1/api/weather/hourly`
 
-> ### Example Query
+> All hourly weather observations at CHICAGO/MIDWAY since June 24<sup>th</sup>, 2016.
 
 ```
 http://plenar.io/v1/api/weather/hourly/?wban_code=14819&datetime__ge=2016-06-24
 ```
-> All hourly weather observations at CHICAGO/MIDWAY since June 24<sup>th</sup>, 2016.
-
-> ### Example Response
 
 ```json
 {
@@ -296,15 +285,11 @@ Hourly weather observations and attributes (described above) that match the prov
 
 ## `GET /v1/api/weather/metar`
 
-> ### Example Query
+> All metar weather observations at CHICAGO/MIDWAY between June 30<sup>th</sup> and July 1<sup>st</sup>, 2016.
 
 ```
 http://plenar.io/v1/api/weather/metar/?wban_code=94846&datetime__ge=2016-06-29&datetime__le=2016-06-30
 ```
-
-> All metar weather observations at CHICAGO/MIDWAY between June 30<sup>th</sup> and July 1<sup>st</sup>, 2016.
-
-> ### Example Response
 
 ```json
 {

@@ -2,15 +2,11 @@
 
 ## `GET /v1/api/datasets/`
 
-> ### Example Query
+> List all event datasets and fields within them
 
 ```
 http://plenar.io/v1/api/datasets/
 ```
-
-> List of all event datasets.
-
-> ### Example Response
 
 ```json
 {
@@ -104,15 +100,11 @@ One record per event dataset.
 
 ## `GET /v1/api/shapes`
 
-> ### Example Query
+> This query yields information about every shape dataset.
 
 ```
 http://plenar.io/v1/api/shapes/
 ```
-
-> This query yields information about every shape dataset.
-
-> ### Example Response
 
 ```json
 {
@@ -175,13 +167,11 @@ One record per shape dataset.
 
 ## `GET /v1/api/fields/<dataset_name>/`
 
-> ### Example Query
+> Field definitions for Chicago crime report dataset
 
 ```
 http://plenar.io/v1/api/fields/crimes_2001_to_present/
 ```
-
-> Field definitions for Chicago crime report dataset
 
 _This endpoint is deprecated in favor of `/datasets`._
 
@@ -194,8 +184,6 @@ Gives you a listing of all the fields and their data types for the given dataset
 This API endpoint has no query parameters.
 
 ### Response
-
-> ### Example Response
 
 ```json
 {

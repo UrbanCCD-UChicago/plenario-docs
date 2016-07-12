@@ -69,7 +69,7 @@ to provide a list of dataset names.
 When you make a query against a specific dataset,
 you can filter against that dataset's attributes.
 You can find out the name and types of each dataset's attributes
-through the event and shape metadata endpoints.
+through the event and shape metadata endpoints. For a detailed list of all `field_type` options, consult the table at the bottom of [this PostgreSQL documentation](https://www.postgresql.org/docs/9.3/static/datatype.html).
 
 You can use the following binary operators:
 
@@ -92,7 +92,7 @@ You can use the following binary operators:
 
 
 <aside class="notice">
-    like and ilike match patterns using the SQL LIKE operator. That lets you use % and _ as wildcard characters. % matches a string of any length, while _ matches exactly one character.
+    <code>like</code> and <code>ilike</code> match patterns using the SQL LIKE operator. That lets you use <code>%</code> and <code>_</code> as wildcard characters. <code>%</code> matches a string of any length, while <code>_</code> matches exactly one character.
 </aside>
 
 ## Attribute Filtering
