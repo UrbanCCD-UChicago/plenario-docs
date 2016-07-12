@@ -39,7 +39,7 @@ to provide a list of dataset names.
 
 ## Attribute Operators
 
-> Use the columns information from each dataset's metadata
+> Use the "columns" information from each dataset's metadata
 > to find the name
 
 
@@ -67,7 +67,7 @@ to provide a list of dataset names.
 ```
 
 When you make a query against a specific dataset,
-you can filter against that dataset's attributes
+you can filter against that dataset's attributes.
 You can find out the name and types of each dataset's attributes
 through the event and shape metadata endpoints.
 

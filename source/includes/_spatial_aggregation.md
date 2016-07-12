@@ -59,10 +59,10 @@ See example grid heatmaps in the [Plenario explorer](http://plenar.io/explore/ev
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
-|**dataset_name** | yes | n/a
-|**location_geom__within** | no | none
-|**obs_date__ge** & **obs_date__le**| no | 90 days ago - today
-|**[dataset_name]__filter**| no | none
+| [**dataset_name**](#specifying-a-dataset) | yes | n/a
+| [**location_geom__within**](#space-filtering) | no | none
+| [**obs_date__ge** & **obs_date__le**](#time-filtering) | no | 90 days ago - today
+| [**[dataset_name]__filter**](#attribute-filtering) | no | none
 
 ### Query Parameters
 

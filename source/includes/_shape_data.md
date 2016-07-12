@@ -8,9 +8,7 @@
 > Filter so that only those set aside for retail are included.
 
 ```
-http://plenar.io/v1/api/shapes/pedestrian_streets?
-data_type=json&pedestrian_streets__filter={
-"op": "eq", "col": "name", "val": "PEDESTRIAN STREET RETAIL"}
+http://plenar.io/v1/api/shapes/pedestrian_streets/?data_type=json&pedestrian_streets__filter={"op": "eq", "col": "name", "val": "PEDESTRIAN STREET RETAIL"}
 ```
 
 Request shapes from a shape dataset.
@@ -21,8 +19,8 @@ You can also apply a spatial filter or filter on attributes to request a subset.
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
-|**location_geom__within** | no | none
-|**[dataset_name]__filter**| no | none
+| [**location_geom__within**](#space-filtering) | no | none
+| [**[dataset_name]__filter**](#specifying-a-dataset) | no | none
 
 ### Endpoint-Specific Parameters
 

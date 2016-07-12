@@ -62,10 +62,10 @@ Query a particular dataset and get back the raw individual records.
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
-|**dataset_name** | yes | n/a
-|**location_geom__within** | no | none
-|**obs_date__ge** & **obs_date__le**| no | 90 days ago - today
-|**[dataset_name]__filter**| no | none
+| [**dataset_name**](#specifying-a-dataset) | yes | n/a
+| [**location_geom__within**](#space-filtering) | no | none
+| [**obs_date__ge** & **obs_date__le**](#time-filtering)| no | 90 days ago - today
+| [**[dataset_name]__filter**](#attribute-filtering)| no | none
 
 ### Endpoint-Specific Parameters
 
@@ -83,11 +83,10 @@ which can be paginated by using the `offset` parameter.
 
 | **Attribute Name** | **Attribute Description**                              |
 | ------------------ | ------------------------------------------------------ |
-| **_meta_**         |                                                        |
-| - **status**         | Indicates query success, can be `ok` or `error`.       |
-| - **query**          | Shows values used in the query.                        |
-| - **message**        | Reports errors or warnings (if any).                   |
-| - **total**          | Total number of records found.                         |
+| **status**         | Indicates query success, can be `ok` or `error`.       |
+| **query**          | Shows values used in the query.                        |
+| **message**        | Reports errors or warnings (if any).                   |
+| **total**          | Total number of records found.                         |
 | **_objects_**      | Contains records        |
 
 ### Filtering with a Shape Dataset

@@ -12,8 +12,8 @@ plenar.io/v1/api/detail/?dataset_name=crimes_2001_to_present&shape=boundaries_ne
 plenar.io/v1/api/detail/?dataset_name=food_inspections&shape=boundaries_neighborhoods&boundaries_neighborhoods__filter={"op": "eq", "col": "pri_neigh", "val": "Logan Square"}
 ```
 
-All data in Plenario is a spatial.
-If it's in Plenario, you can put it on map.
+All data in Plenario is spatial.
+If it's in Plenario, you can put it on a map.
 Because Plenario makes sure all of its data lives on the same map,
 you can apply common spatial operations to different datasets.
 For example, you can take two datasets - crimes and food inspections in Chicago - and extract only the events that happened in the neighborhood of Logan Square.
@@ -44,8 +44,8 @@ plenar.io/v1/api/datasets
 
 ### Events
 
-All records in event datasets have a temporal component - a point in time -
-and a spatial component - a point in space.
+All records in event datasets have a temporal component (a point in time)
+and a spatial component (a point in space).
 For example, every record in the Chicago food inspections dataset represents one inspection.
 An inspector walked into a restaurant - represented as a latitude longitude point - at a time - represented as a timestamp.
 
@@ -93,5 +93,5 @@ A single record should have a point in space and a timestamp for both the origin
 
 We can't support these fully _yet_.
 We're working to expand the types of datasets Plenario can handle.
-For example, you'll find below an API for querying NOAA weather reports.
+For example, you'll find an API for querying NOAA weather reports in a [later section](#weather).
 We're currently building more general support for urban sensor networks - static locations with many observations.

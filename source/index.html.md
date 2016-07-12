@@ -41,6 +41,6 @@ The Plenario API can be used to perform custom geospatial and temporal queries.
 A few things to know:
 
 * All API calls should be made with `HTTP GET`
-* All methods are accessed via: `http://plenar.io/v1/api/SOME-ENDPOINT`
+* All methods are accessed via: `http://plenar.io/v1/api/<ENDPOINT>`
 * All API responses default to [JSON format](http://www.json.org/), but you can
 specify alternate formats specific to some endpoints.
