@@ -19,8 +19,6 @@ deploy:
   skip_cleanup: true
   local-dir: build
   acl: public_read
-  on:
-    branch: gh-pages
 notifications:
   slack:
     secure: CxwiKC3leWb4zd6ofAHJlNBmjbWfMabJ6W8qW1AEhlLcsdLjdD4IJO1flHvd0IxY/2M1lSUD0XNGgXl6dF8Dd2ML/yUvXw0BwbU1TtZ1P2vuLAahczrgZ09lBR+sQJpEXYhDIrxJ8jL1LW7VQyGcseWpAfSUBna0YPEYu077LbgZka/eHvRsIUBOKoJLd5blfvLLVzVx51bEzDp1KN3XcWGSXNx/rdo8gf+MpPRF5k1W82TgGre1YM6A6itge2dbtShYzYf5CtyXQy6ppWwABHToynIxoZaI9chG8REnJyr8RwBUa4VoW12sqmg5XZkmE5oijREwtIX9e8gy1XAAS+8RhJmA3RLsVwhaQNtsdrx3Z9gdn7ZDln+F6WcaxqMQTpOOm40QMuO50yYpIO1A/cB+4zGe/T4cslPiQvLEAM43rPyMishQqq0WXR+xyAa7/Sktmjw8K7Ae50c9dy9qdbprUALlv6xf+1wksf1P47HEtY+ES6PxVWLFuGz3CdKdkoDHxrYX1KRqtvUoTac320fHOz9v/Wqn4DdocQLF94HMy7oyrzzAjFQGpXBVnWjwve6NNxdsfW3RpUYDsrBkx4DypIBONv3BnKJBOe480jn1s/svceGcW3LLy3kiJPJHR7bVV13F1+r+/qZmwZ3yfPVl6asd6CbA7S+JbaxO2HA=
