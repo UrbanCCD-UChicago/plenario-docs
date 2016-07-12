@@ -80,9 +80,9 @@ By default, this endpoint returns every available event dataset.
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
-|**dataset_name**/**dataset_name__in**  | no | none
-|**location_geom__within** | no | none
-|**obs_date__ge** & **obs_date__le**| no | none
+| [**dataset_name**/**dataset_name__in**](#specifying-a-dataset)  | no | none
+| [**location_geom__within**](#space-filtering) | no | none
+| [**obs_date__ge** & **obs_date__le**](#time-filtering)| no | none
 
 ### Response
 
@@ -90,15 +90,15 @@ One record per event dataset.
 
 | **Attribute Name** 	| **Attribute Description**                                                                   	|
 |----------------	|------------------------------------------------------------------------------------------	|
-| **description**    	| Verbose, official description of the dataset.                                            	|
-|**attribution**| The data provider
-| **source_url**     	| If available, the URL where the data was originally sourced.                             	|
-|**view_url**| A URL where you can learn more about the dataset.
+| **attribution**    	| The data provider                                            	|
+|**description**| Verbose, official description of the dataset. |
+| **view_url**     	| A URL where you can learn more about the dataset.                             	|
 |**columns**| Name and type of each column.
 | **obs_from**       	| Oldest date available in the dataset.                                                     	|
-| **obs_to**         	| Newest date available in the dataset.                                                    	|
 |**bbox**| The smallest rectangle that contains every event in this dataset. (GeoJSON polygon)
 | **human_name**     	| Human-friendly name for the dataset.                                                     	|
+| **obs_to**         	| Newest date available in the dataset.                                                    	|
+| **source_url** | If available, the URL where the data was originally sourced. |
 | **dataset_name**   	| Machine name for the dataset. The name you need to supply in other endpoints.
 | **update_freq**    	| How often Plenario checks the source dataset for updates.                                                                        	|
 
@@ -156,7 +156,7 @@ Specify `location_geom_within` to only view metadata about shape datasets in a p
 
 | Parameter Name       | Required? | Default                                                           |
 |----------------------|-------------------|---------------------------------------------------------------------------------|
-| **location_geom_within** | no             | None |
+| [**location_geom_within**](#space-filtering) | no             | None |
 
 ### Responses
 
@@ -164,13 +164,14 @@ One record per shape dataset.
 
 | Attribute Name | Attribute Description                                         |
 |----------------|---------------------------------------------------------------|
+| **attribution**    	| The data provider                                            	|
 | **description**    | Verbose, official description of the dataset.                 |
 | **source_url**     | If available, the URL where the data was originally sourced.  |
-|**columns**| Name and type of each column.
-| **update_freq**    | Update frequency                                              |
-| **dataset_name**   | the name by which you can query the shape dataset             |
-| **human_name**     | a nicer name to refer to the shape dataset in user interfaces |
 | **date_added**     | the date the shape dataset was added to Plenario              |
+| **human_name**     | a nicer name to refer to the shape dataset in user interfaces |
+| **dataset_name**   | the name by which you can query the shape dataset             |
+| **update_freq**    | Update frequency                                              |
+|**columns**| Name and type of each column.
 
 ## `GET /v1/api/fields/<dataset_name>/`
 

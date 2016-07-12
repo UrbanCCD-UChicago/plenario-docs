@@ -101,17 +101,17 @@ You can set the unit of aggregation with the `agg` parameter.
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
-|**dataset_name**/**dataset_name__in** | no | every event dataset
-|**location_geom__within** | no | none
-|**obs_date__ge** & **obs_date__le**| no | 90 days ago - today
-|**[dataset_name]__filter**| no | none
+| [**dataset_name**/**dataset_name__in**](#specifying-a-dataset) | no | every event dataset
+| [**location_geom__within**](#space-filtering) | no | none
+| [**obs_date__ge** & **obs_date__le**](#time-filtering) | no | 90 days ago - today
+| [**[dataset_name]__filter**](#attribute-filtering) | no | none
 
 ### Endpoint-Specific Parameters
 
 | **Parameter Name**       | **Parameter Default** | **Parameter Description**                                                                                                                                                                                                                                          |
 |----------------------|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **agg**                  | week              | Time resolution to aggregate observation counts by. Supported values: <ul><li>day</li><li>week</li><li>month</li><li>quarter</li><li>year</li></ul>                                                                                                                                                   |
-| **data_type**            | json              | Response data format. Current options are `json`, and `csv`.
+| **data_type**            | json              | Response data format. Current options are `json` and `csv`.
 
 
 ### Response
@@ -123,23 +123,20 @@ Many of the metadata attributes from `/datasets` are included as well.
 
 | **Attribute Name** | **Attribute Description**                              |
 | ------------------ | ------------------------------------------------------ |
-| **_meta_**         |                                                        |
-| - **status**         | Indicates query success, can be `ok` or `error`.       |
-| - **query**          | Shows values used in the query.                        |
-| - **message**        | Reports errors or warnings (if any).                   |
-| **_objects_**      |                                                        |
-| - **dataset_name**   | The dataset this timeseries was created from.          |
-| - **count**          | Total number of records found.  |
-| - **items**          | Counts of aggregated records and delimiting datetimes. |
+| **status**         | Indicates query success, can be `ok` or `error`.       |
+| **query**          | Shows values used in the query.                        |
+| **message**        | Reports errors or warnings (if any).                   |
+| **dataset_name**   | The dataset this timeseries was created from.          |
+| **count**          | Total number of records found.  |
+| **datetime**       | Date of aggregation
+| **items**          | Counts of aggregated records and delimiting datetimes. |
 
 ## `GET v1/api/detail-aggregate/`
 
 _This endpoint is deprecated in favor of `/timeseries`_
 
 ```
-http://plenar.io/v1/api/detail-aggregate/?agg=year&
-dataset_name=crimes_2001_to_present&obs_date__ge
-=2012-1-1
+http://plenar.io/v1/api/detail-aggregate/?agg=year&dataset_name=crimes_2001_to_present&obs_date__ge=2012-1-1
 ```
 
 Just like `/timeseries`,
