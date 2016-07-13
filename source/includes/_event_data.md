@@ -56,7 +56,7 @@ http://plenar.io/v1/api/detail/?dataset_name=crimes_2001_to_present&obs_date__ge
     }
 ```
 
-Query a particular dataset and get back the raw individual records.
+Query an [event dataset](#dataset-types) and get back the raw individual records.
 
 ### Common Query Syntax
 
