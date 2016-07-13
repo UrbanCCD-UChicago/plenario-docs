@@ -2,11 +2,15 @@
 
 ## `GET /v1/api/datasets/`
 
-> List all event datasets and fields within them
+> ### Example Query
 
 ```
 http://plenar.io/v1/api/datasets/
 ```
+
+> List of all event datasets.
+
+> ### Example Response
 
 ```json
 {
@@ -63,9 +67,9 @@ Used to list available event datasets and fetch their metadata.
 
 ### Bounding Boxes
 
-Each event dataset's metadata contains a spatial and temporal bounding box,
+Each [event dataset](#dataset-types)'s metadata contains a spatial and temporal bounding box,
 the smallest timespan and rectangle in which all events in the dataset are contained.
-If you apply spatial or temporal filters to this endpoint,
+If you apply spatial or temporal [filters](#time-filtering) to this endpoint,
 it will only return datasets with events that fell within your filters.
 It is often helpful to use these bounding boxes
 to narrow down a search over all the datasets in Plenario.
@@ -100,11 +104,15 @@ One record per event dataset.
 
 ## `GET /v1/api/shapes`
 
-> This query yields information about every shape dataset.
+> ### Example Query
 
 ```
 http://plenar.io/v1/api/shapes/
 ```
+
+> This query yields information about every shape dataset.
+
+> ### Example Response
 
 ```json
 {
@@ -135,9 +143,9 @@ Used to list available shape datasets and fetch their metadata.
 
 ### Bounding Boxes
 
-Each shape dataset's metadata contains a spatial bounding box,
+Each [shape dataset](#dataset-types)'s metadata contains a spatial bounding box,
 the smallest rectangle in which all shapes in the dataset are contained.
-If you apply a spatial filter to this endpoint,
+If you apply a [spatial filter](#space-filtering) to this endpoint,
 it only returns datasets with shapes within the box.
 Furthermore, the `num_shapes` response parameter will only
 count the shapes that were contained by or intersected your filter.
@@ -167,15 +175,17 @@ One record per shape dataset.
 
 ## `GET /v1/api/fields/<dataset_name>/`
 
-> Field definitions for Chicago crime report dataset
+> ### Example Query
 
 ```
 http://plenar.io/v1/api/fields/crimes_2001_to_present/
 ```
 
+> Field definitions for Chicago crime report dataset
+
 _This endpoint is deprecated in favor of `/datasets`._
 
-Given an event dataset name, return all fields and their types.
+Given an [event dataset](#dataset-types) name, return all fields and their types.
 
 Gives you a listing of all the fields and their data types for the given dataset.
 
@@ -184,6 +194,8 @@ Gives you a listing of all the fields and their data types for the given dataset
 This API endpoint has no query parameters.
 
 ### Response
+
+> ### Example Response
 
 ```json
 {

@@ -2,11 +2,15 @@
 
 ## `GET v1/api/weather-stations/`
 
-> A list of weather stations in Illinois.
+> ### Example Query
 
 ```
 http://plenar.io/v1/api/weather-stations/?state=IL
 ```
+
+> A list of weather stations in Illinois.
+
+> ### Example Response
 
 ```json
 {
@@ -58,7 +62,7 @@ All query parameters are optional.
 | **state**        | Two-digit state code                                                                                              |
 | **location**     | Latitude and longitude location of weather station. Can be queried with a GeoJSON shape using `location__within`. |
 
-For any given parameter above, the query can be modified with [query operators](#query-operators-for-raw-data).
+For any given parameter above, the query can be modified with [attribute operators](#attribute-operators).
 
 ### Responses
 
@@ -66,11 +70,15 @@ For any given parameter above, the query can be modified with [query operators](
 
 ## `GET /v1/api/weather/daily`
 
-> All daily weather observations at Chicago's Midway Airport (WBAN code 14819, `station_name` CHICAGO/MIDWAY) since June 1<sup>st</sup>, 2016.
+> ### Example Query
 
 ```
 http://plenar.io/v1/api/weather/daily/?wban_code=14819&date__ge=2016-06-01
 ```
+
+> All daily weather observations at Chicago's Midway Airport (WBAN code 14819, `station_name` CHICAGO/MIDWAY) since June 1<sup>st</sup>, 2016.
+
+> ### Example Response
 
 ```json
 {
@@ -173,7 +181,7 @@ All query parameters are optional.
 | **max2_winddirection**               | The maximum windspeed of recorded **2-minute** averages (in degrees)                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **max2_direction_cardinal**          | The maximum windspeed of recorded **2-minute** averages (in cardinal directions)                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 
-For any given parameter above, the query can be modified with [query operators](#query-operators-for-raw-data).
+For any given parameter above, the query can be modified with [attribute operators](#attribute-operators).
 
 ### Responses
 
@@ -181,11 +189,14 @@ For any given parameter above, the query can be modified with [query operators](
 
 ## `GET /v1/api/weather/hourly`
 
-> All hourly weather observations at CHICAGO/MIDWAY since June 24<sup>th</sup>, 2016.
+> ### Example Query
 
 ```
 http://plenar.io/v1/api/weather/hourly/?wban_code=14819&datetime__ge=2016-06-24
 ```
+> All hourly weather observations at CHICAGO/MIDWAY since June 24<sup>th</sup>, 2016.
+
+> ### Example Response
 
 ```json
 {
@@ -277,7 +288,7 @@ All query parameters are optional.
 | **report_type**             | Standard reports are denoted 'AA' and special reports (e.g. for tornadoes) are 'SP'. <ul><li>AA: METAR (AVIATION ROUTINE WEATHER REPORT) - HOURLY</li><li>SP: METAR SPECIAL REPORT</li><li>CRN05: Climate Reference Network</li></ul>                                                                                                                                                                                                                                                                                                                          |
 | **hourly_precip**           | Precipitation total (in inches)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 
-For any given parameter above, the query can be modified with [query operators](#query-operators-for-raw-data).
+For any given parameter above, the query can be modified with [attribute operators](#attribute-operators).
 
 ### Responses
 
@@ -285,11 +296,15 @@ Hourly weather observations and attributes (described above) that match the prov
 
 ## `GET /v1/api/weather/metar`
 
-> All metar weather observations at CHICAGO/MIDWAY between June 30<sup>th</sup> and July 1<sup>st</sup>, 2016.
+> ### Example Query
 
 ```
 http://plenar.io/v1/api/weather/metar/?wban_code=94846&datetime__ge=2016-06-29&datetime__le=2016-06-30
 ```
+
+> All metar weather observations at CHICAGO/MIDWAY between June 30<sup>th</sup> and July 1<sup>st</sup>, 2016.
+
+> ### Example Response
 
 ```json
 {
@@ -384,7 +399,7 @@ All query parameters are optional
 | **precip_6hr**              | Precipitation total in the last 6 hours (in inches)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | **precip_24hr**             | Precipitation total in the last 24 hours (in inches)                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 
-For any given parameter above, the query can be modified with [query operators](#query-operators-for-raw-data).
+For any given parameter above, the query can be modified with [attribute operators](#attribute-operators).
 
 ### Responses
 

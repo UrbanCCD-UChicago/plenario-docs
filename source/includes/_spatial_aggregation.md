@@ -109,7 +109,7 @@ http://plenar.io/v1/api/shapes/boundaries_neighborhoods/individual_landmarks?obs
 }
 ```
 
-Given an event dataset and a polygon dataset, return a document of all of the
+Given an [event dataset and a polygon dataset](#dataset-types), return a document of all of the
 polygons in the polygon dataset together with the counts of the points that
 intersect them.
 Like `/grid`, except using shapes defined in Plenario as opposed to an automatically generated grid.

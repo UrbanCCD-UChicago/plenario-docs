@@ -93,7 +93,7 @@ http://plenar.io/v1/api/timeseries/?obs_date__ge=2010-1-1&obs_date__le=2015-12-3
 }
 ```
 
-This endpoint creates timeseries over one or more event datasets
+This endpoint creates timeseries over one or more [event datasets](#dataset-types)
 by counting how many events fall into each time slice.
 You can set the unit of aggregation with the `agg` parameter.
 
@@ -119,15 +119,17 @@ You can set the unit of aggregation with the `agg` parameter.
 The API responds with a list of datasets with a dense matrix of counts grouped
 by temporal aggregation.
 The actual timeseries values are inside of `items`.
-Many of the metadata attributes from `/datasets` are included as well.
+Many of the [metadata attributes](#get-v1-api-datasets) from `/datasets` are included as well.
 
 | **Attribute Name** | **Attribute Description**                              |
 | ------------------ | ------------------------------------------------------ |
+| **status**         | Indicates query success, can be `ok` or `error`.       |
+| **query**          | Shows values used in the query.                        |
+| **message**        | Reports errors or warnings (if any).                   |
 | **dataset_name**   | The dataset this timeseries was created from.          |
-| **count**          | Total number of records found within the subset specified by the query. |
-| **items**          | Subcounts of aggregated records and each `datetime` of aggregation. |
-
-
+| **count**          | Total number of records found.  |
+| **datetime**       | Date of aggregation
+| **items**          | Counts of aggregated records and delimiting datetimes. |
 
 ## `GET v1/api/detail-aggregate/`
 

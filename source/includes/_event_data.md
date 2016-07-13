@@ -83,7 +83,11 @@ which can be paginated by using the `offset` parameter.
 
 | **Attribute Name** | **Attribute Description**                              |
 | ------------------ | ------------------------------------------------------ |
-| **objects**      | Contains records from dataset; that is, every `field_name` and its corresponding value for each record      |
+| **status**         | Indicates query success, can be `ok` or `error`.       |
+| **query**          | Shows values used in the query.                        |
+| **message**        | Reports errors or warnings (if any).                   |
+| **total**          | Total number of records found.                         |
+| **_objects_**      | Contains records        |
 
 ### Filtering with a Shape Dataset
 
@@ -93,10 +97,10 @@ which can be paginated by using the `offset` parameter.
 &shape=boundaries_neighborhoods&boundaries_neighborhoods__filter={"op": "eq", "col": "pri_neigh", "val": "Logan Square"}
 ```
 
-Use the `shape` parameter to specify the name of a shape dataset.
+Use the `shape` parameter to specify the name of a [shape dataset](#dataset-types).
 Then the endpoint will only return events
 that intersect or are contained by shapes in the dataset.
-This feature is particularly useful when you apply filters to the dataset
+This feature is particularly useful when you apply [filters](#attribute-filtering) to the dataset
 by adding a `<shape_dataset_name>__filter` parameter.
 For example, you can specify the Chicago neighborhoods shape dataset
 and specify a neighborhood in your filter to only fetch events from one neighborhood.
