@@ -5,7 +5,7 @@
 > Heat map of Chicago 311 tree trim requests in 2014
 
 ```
-http://plenar.io/v1/api/grid/?obs_date__ge=2014-01-01&obs_date__le=2014-12-31dataset_name=311_service_requests_tree_trims
+http://plenar.io/v1/api/grid/?obs_date__ge=2014-01-01&obs_date__le=2014-12-31&dataset_name=311_service_requests_tree_trims
 ```
 
 ```json
