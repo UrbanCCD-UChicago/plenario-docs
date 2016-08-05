@@ -74,12 +74,12 @@ Query an [event dataset](#dataset-types) and get back the raw individual records
 | **data_type**            | json              | Response data format. Current options are `json`, `geojson` and `csv`                                                                                                                                                         |
 | **shape**                 | none              | Filter with a shape dataset                                                                                           |
 | **offset**               | none              | Used to paginate through results of more than 1000.  Example: `offset=1000` will fetch the second page of results.                                                                                  |
+| **limit** | 1000 | Set a custom limit on the amount of records returned; maximum is 10,000 |
 
 ### Responses
 
 **See right**. The API responds with a list of raw records for the particular dataset. The
-fields returned will vary per dataset. Response is limited to 1000 results,
-which can be paginated by using the `offset` parameter.
+fields returned will vary per dataset. By default, the response is limited to 1000 results; the absolute maximum is 10,000 results, so set a custom `limit` within those bounds if necessary. These results can still be paginated by using the `offset` parameter.
 
 | **Attribute Name** | **Attribute Description**                              |
 | ------------------ | ------------------------------------------------------ |
