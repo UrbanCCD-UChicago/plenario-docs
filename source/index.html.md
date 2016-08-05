@@ -21,6 +21,7 @@ includes:
   - temporal_aggregation
   - spatial_aggregation
   - weather
+  - large_datadumps
 
 search: true
 ---
