@@ -37,6 +37,19 @@ In that case, specify the `dataset_name` query parameter.
 If you can specify more than one dataset, you can use `dataset_name__in`
 to provide a list of dataset names.
 
+## Jobs Framework
+
+> You can invoke the Jobs interface by appending `job=true` to your query.
+
+```
+http://plenar.io/v1/api/datasets?job=true
+```
+
+>This will return a jobs ticket instead of the usual datasets endpoint. You can then use the link provided by the ticket to access the job status and results.
+
+The Plenario Jobs Framework introduces support for longer-running queries on the Plenario API through an asynchronous ticket-style interface. Now endpoints which support the jobs framework can return a ticket with a link to a page which shows the job query, its status, and its result when ready.
+
+
 ## Attribute Operators
 
 > Use the "columns" information from each dataset's metadata

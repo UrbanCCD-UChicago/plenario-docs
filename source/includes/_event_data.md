@@ -113,3 +113,9 @@ to produce a geometry column that it uses internally.
 If you want to get the geometry Plenario has parsed,
 use the `data_type` parameter to specify `geojson`.
 Plenario will return each record as a GeoJSON point with the parsed latitude and longitude in the `coordinates` object and the original values in the `attributes` object.
+
+## Plenario Datadump
+
+> The `datadump` endpoint is housed on Plenario's backend; access it through [Plenario's Explore feature](http://plenar.io/explore/discover) by selecting a dataset and choosing Download.
+
+Plenario Datadump is a streamlined method of downloading large (above 1000 results) data in both CSV and JSON format. Compare this to the existing `detail` endpoint; due to HTTP timeouts and other limitations, `detail` only returns a pre-specified number of rows, and it was necessary to page through these rows in order to access all the data. Instead, Plenario Datadump takes advantage of the long-running queries enabled by the Jobs Framework to dump the entire query into a file, allowing the query to be downloaded later as one unit. Plenario Datadump is located at the `/datadump` endpoint, and takes the same query parameters as `detail`. `jobs=true` is implied, so you do not need to use it explicitly.
