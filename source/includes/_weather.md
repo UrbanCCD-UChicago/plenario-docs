@@ -58,7 +58,7 @@ All query parameters are optional.
 | **begin**        | Date of first weather observation                                                                                 |
 | **end**          | Date of last weather observation                                                                                  |
 | **elevation**    | Elevation of station (in feet)                                                                                    |
-| **county**       | County name                                                                                                       |
+| **country**      | Country name                                                                                                      |
 | **state**        | Two-digit state code                                                                                              |
 | **location**     | Latitude and longitude location of weather station. Can be queried with a GeoJSON shape using `location__within`. |
 
