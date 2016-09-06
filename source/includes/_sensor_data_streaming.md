@@ -17,9 +17,9 @@
 
 Plenary utilizes the [socket.io protocol](https://github.com/socketio/socket.io-protocol) in order to provide near real time streaming of sensor data. A user may specify lists of nodes, features_of_interest, and/or sensors. They will then only be streamed data that satisfies these parameters. If no parameters are specified, the default is to stream all data from the array_of_things network.
 
-Any invalid parameters and other errors will be emitted as JSON internal_error events and no connection will be created. If all parameters are valid and no errors occur, the client will begin receiving data events from the socket.
+Any invalid parameters and other errors will be emitted as JSON `internal_error` events and no connection will be created. If all parameters are valid and no errors occur, the client will begin receiving `data` events from the socket.
 
-> Start a socket client that will print any internal_error and all temperature data from the HTU21D sensor on nodes 00A and 00B
+> Start a socket client that will print any `internal_error` and all temperature `data` events from the HTU21D sensor on nodes 00A and 00B
 
 > **Sample Node.js client** using the [socket.io-client](http://socket.io/docs/) module
 
