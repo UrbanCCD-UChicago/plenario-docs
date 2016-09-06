@@ -58,13 +58,11 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?location_geom__wit
   "meta": {
     "query": {
       "start_datetime": "2016-12-1T00:00:00.000",
-      "features_of_interest": [
-        "temperature"
-      ],
       "limit": 1000,
+      "geom": {"type":"Polygon","coordinates":[[[40.0, -90.0],[45.0,-90.0],[45.0, -85.0],[40.0, -85.0]]]},
       "end_datetime": "2017-1-1T00:00:00.000",
       "offset": 0,
-      "network_name": "array_of_things",
+      "network_name": "array_of_things"
     },
     "message": [],
     "total": 1000

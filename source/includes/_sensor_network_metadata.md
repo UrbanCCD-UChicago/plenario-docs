@@ -116,7 +116,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/?location_geom__wi
 { 
   "meta": {
     "query": {
-      "geom": "{"type": "Polygon", "coordinates": [[[40.0, -90.0], [45.0, -90.0], [45.0, -85.0], [40.0, -85.0]]]}",
+      "geom": {"type": "Polygon", "coordinates": [[[40.0, -90.0], [45.0, -90.0], [45.0, -85.0], [40.0, -85.0]]]},
       "network_name": "array_of_things"
     },
     "message": [ ],
