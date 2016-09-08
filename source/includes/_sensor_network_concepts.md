@@ -29,6 +29,10 @@ A single sensor may report values for multiple properties from multiple
 features of interest. A sensor may also report only a subset of the 
 observed properties of a feature of interest.
 
+## Metadata Model
+
+![metadatamodel](https://cloud.githubusercontent.com/assets/19937363/18366166/3a8cc5e4-75db-11e6-83ea-027afaef6f0e.png)
+
 ## Sensor Network Time Filtering
 
 > Query over January 2015

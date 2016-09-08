@@ -20,11 +20,11 @@ includes:
   - shape_data
   - temporal_aggregation
   - spatial_aggregation
-  - weather
   - sensor_network_concepts
   - sensor_network_metadata
   - sensor_network_data
   - sensor_data_streaming
+  - weather
 
 search: true
 ---
