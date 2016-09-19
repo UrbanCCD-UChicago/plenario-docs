@@ -30,8 +30,8 @@ That makes it easy to aggregate datasets up to the same temporal unit and compar
 
 ## Dataset Types
 
-Plenario currently supports two types of datasets:
-**event** datasets and **shape** datasets.
+Plenario currently supports three types of datasets:
+**event** datasets, **shape** datasets, and **sensor network** datasets.
 The type of a dataset lets you know what kind of
 spatial and temporal information it is guaranteed
 to have.
@@ -76,11 +76,20 @@ For example, the shape dataset with the borders of
 Chicago's neighborhoods has a column with the
 neighborhoods' names.
 
-> See all NOAA weather stations in Plenario
+> See all sensor networks in Plenario
 
 ```
-plenar.io/v1/api/weather-stations
+plenar.io/v1/api/sensor-networks
 ```
+
+### Sensor Networks
+
+Sensor networks are collections of sensor nodes that report on physical phenomena
+like temperature, air quality, or traffic.
+In particular, Plenario reports observations from
+Chicago's [Array of Things](http://arrayofthings.github.io/) sensor network.
+Sensor observations have a spatial component (a node's location)
+and a temporal component (when the observation was taken).
 
 ### Datasets That Don't Fit
 
@@ -90,8 +99,5 @@ What about neighborhood unemployment rates?
 That has a static spatial component plus a timeseries.
 Or urban bike share trips?
 A single record should have a point in space and a timestamp for both the origin and the destination.
-
-We can't support these fully _yet_.
-We're working to expand the types of datasets Plenario can handle.
-For example, you'll find an API for querying NOAA weather reports in a [later section](#weather).
-We're currently building more general support for urban sensor networks - static locations with many observations.
+We can't support these fully _yet_,
+but we're always working to expand the types of datasets Plenario can handle.
