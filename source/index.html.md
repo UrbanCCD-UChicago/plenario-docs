@@ -13,6 +13,7 @@ toc_footers:
 includes:
   - plenario
   - concepts
+  - tabular_data
   - query_syntax
   - response_format
   - metadata_endpoints

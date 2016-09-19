@@ -1,6 +1,6 @@
-# Query Syntax
+## Query Syntax
 
-## Time Filtering
+## -- Time Filtering
 
 > Query over 2015
 
@@ -15,7 +15,7 @@ For endpoints that accept temporal filters, you can provide the query parameters
 |`obs_date__ge`|start of date range|90 days ago|
 |`obs_date__le`|end of date range|today|
 
-## Space Filtering
+## -- Space Filtering
 
 > Query over the author's block
 
@@ -30,14 +30,14 @@ It must be a URL encoded [GeoJSON](http://geojson.org/) polygon or multipolygon.
     This is a nice site to <a href=http://geojson.org/>generate geojson</a>.
 </aside>
 
-## Specifying a Dataset
+## -- Specifying a Dataset
 
 Many endpoints require you to specify a dataset to query.
 In that case, specify the `dataset_name` query parameter.
 If you can specify more than one dataset, you can use `dataset_name__in`
 to provide a list of dataset names.
 
-## Jobs Framework
+## -- Jobs Framework
 
 > You can invoke the Jobs interface by appending `job=true` to your query.
 
@@ -50,7 +50,7 @@ http://plenar.io/v1/api/datasets?job=true
 The Plenario Jobs Framework introduces support for longer-running queries on the Plenario API through an asynchronous ticket-style interface. Now endpoints which support the jobs framework can return a ticket with a link to a page which shows the job query, its status, and its result when ready.
 
 
-## Attribute Operators
+## -- Attribute Operators
 
 > Use the "columns" information from each dataset's metadata
 > to find the name
@@ -108,7 +108,7 @@ You can use the following binary operators:
     <code>like</code> and <code>ilike</code> match patterns using the SQL LIKE operator. That lets you use <code>%</code> and <code>_</code> as wildcard characters. <code>%</code> matches a string of any length, while <code>_</code> matches exactly one character.
 </aside>
 
-## Attribute Filtering
+## -- Attribute Filtering
 
 > Filter Chicago Department of Health complaints to only return records with the word "asbestos" in the complaint description
 
@@ -143,7 +143,7 @@ plenar.io/v1/api/detail/?dataset_name=crimes_2001_to_present&crimes_2001_to_pres
 You can specify filters as query parameters in your GET requests as `<dataset_name>__filter={filter}`.
 You need to specify which dataset a filter applies to because a single query might include more than one dataset.
 
-## Attribute Filtering (Old Syntax)
+## -- Attribute Filtering (Old Syntax)
 
 _This syntax is deprecated._
 

@@ -1,6 +1,6 @@
-# Temporal Aggregation
+## Temporal Aggregation
 
-## `GET v1/api/timeseries`
+## -- `GET v1/api/timeseries`
 
 > Generate counts of crime and environmental complaints per year from 2010 to 2015.
 
@@ -97,7 +97,7 @@ This endpoint creates timeseries over one or more [event datasets](#dataset-type
 by counting how many events fall into each time slice.
 You can set the unit of aggregation with the `agg` parameter.
 
-### Common Query Syntax
+_Common Query Syntax_
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
@@ -106,7 +106,7 @@ You can set the unit of aggregation with the `agg` parameter.
 | [**obs_date__ge** & **obs_date__le**](#time-filtering) | no | 90 days ago - today
 | [**[dataset_name]__filter**](#attribute-filtering) | no | none
 
-### Endpoint-Specific Parameters
+_Endpoint-Specific Parameters_
 
 | **Parameter Name**       | **Parameter Default** | **Parameter Description**                                                                                                                                                                                                                                          |
 |----------------------|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -114,7 +114,7 @@ You can set the unit of aggregation with the `agg` parameter.
 | **data_type**            | json              | Response data format. Current options are `json` and `csv`.
 
 
-### Response
+_Response_
 
 The API responds with a list of datasets with a dense matrix of counts grouped
 by temporal aggregation.
@@ -131,7 +131,7 @@ Many of the [metadata attributes](#get-v1-api-datasets) from `/datasets` are inc
 | **datetime**       | Date of aggregation
 | **items**          | Counts of aggregated records and delimiting datetimes. |
 
-## `GET v1/api/detail-aggregate/`
+## -- `GET v1/api/detail-aggregate/`
 
 _This endpoint is deprecated in favor of `/timeseries`_
 
