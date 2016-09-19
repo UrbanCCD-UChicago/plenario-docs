@@ -1,9 +1,9 @@
-# Sensor Data Streaming
+## Sensor Data Streaming
 
 > `data` event format
 
 ```json
-{ 
+{
   "node_id": "00A",
   "meta_id": 11,
   "datetime": "2016-08-05T00:00:08.246000",
@@ -11,7 +11,7 @@
   "feature_of_interest": "temperature",
   "results": {     
       "temperature": 37.90
-  } 
+  }
 }
 ```
 
