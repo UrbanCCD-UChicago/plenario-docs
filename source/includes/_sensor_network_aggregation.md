@@ -1,4 +1,4 @@
-# Sensor Network Aggregation
+## -- Sensor Network Aggregation
 
 This endpoint lets you see historcal trends by aggregating individual
 node observations up to larger units of time. This is done by applying 
