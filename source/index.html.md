@@ -24,6 +24,7 @@ includes:
   - sensor_network_metadata
   - sensor_network_data
   - sensor_data_streaming
+  - sensor_network_aggregation
   - weather
 
 search: true
