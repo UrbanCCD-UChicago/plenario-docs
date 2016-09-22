@@ -1,4 +1,4 @@
-#Response Format
+## Response Format
 
 All JSON API responses return their data in the `objects` block. Additional information is returned in the `meta` block:
 

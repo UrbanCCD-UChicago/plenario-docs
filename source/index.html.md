@@ -13,6 +13,7 @@ toc_footers:
 includes:
   - plenario
   - concepts
+  - event_and_shape
   - query_syntax
   - response_format
   - metadata_endpoints
@@ -20,8 +21,9 @@ includes:
   - shape_data
   - temporal_aggregation
   - spatial_aggregation
-  - sensor_network_concepts
-  - sensor_network_metadata
+  - sensor_network
+  - sensor_network_high_level_metadata
+  - sensor_network_detailed_metadata
   - sensor_network_data
   - sensor_data_streaming
   - sensor_network_aggregation

@@ -1,6 +1,6 @@
-# Event Data Queries
+## Event Data Queries
 
-## `GET /v1/api/detail`
+## -- `GET /v1/api/detail`
 
 > All Chicago homicides since May 1<sup>st</sup>, 2016
 
@@ -58,7 +58,7 @@ http://plenar.io/v1/api/detail/?dataset_name=crimes_2001_to_present&obs_date__ge
 
 Query an [event dataset](#dataset-types) and get back the raw individual records.
 
-### Common Query Syntax
+## -- Common Query Syntax
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
@@ -114,7 +114,7 @@ If you want to get the geometry Plenario has parsed,
 use the `data_type` parameter to specify `geojson`.
 Plenario will return each record as a GeoJSON point with the parsed latitude and longitude in the `coordinates` object and the original values in the `attributes` object.
 
-## Plenario Datadump
+## -- Plenario Datadump
 
 > The `datadump` endpoint is housed on Plenario's backend; access it through [Plenario's Explore feature](http://plenar.io/explore/discover) by selecting a dataset and choosing Download.
 

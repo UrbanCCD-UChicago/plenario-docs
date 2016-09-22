@@ -1,6 +1,6 @@
-# Spatial Aggregation
+## Spatial Aggregation
 
-## `GET v1/api/grid`
+## -- `GET v1/api/grid`
 
 > Heat map of Chicago 311 tree trim requests in 2014
 
@@ -71,14 +71,14 @@ All query parameters are optional except for `dataset_name`.
 | Parameter Name       | Parameter Default | Parameter Description                                                                                                                                                                                              |
 |----------------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **resolution**         | 500               | Square grid size (in meters).                                                                                                                                                                                      |
-| **buffer**               | 100               | If `location_geom__within` is a [GeoJSON LineString](http://geojson.org/geojson-spec.html#linestring), the size of the buffer around that line to query (in meters).                                               |
+| **buffer**               | 100               | If `location###within` is a [GeoJSON LineString](http://geojson.org/geojson-spec.html#linestring), the size of the buffer around that line to query (in meters).                                               |
 
-### Response
+###
 
 **See right**. Plenario will output a GeoJSON with a feature for each grid square containing
 a `count` property of the number of observations within that square.
 
-## `GET /v1/api/shapes/<polygon_dataset_name>/<point_dataset_name>/`
+## -- `GET /v1/api/shapes/<polygon_dataset_name>/<point_dataset_name>/`
 
 > Count the number of historical landmarks in each Chicago neighborhood.
 

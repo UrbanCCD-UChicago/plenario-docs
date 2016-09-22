@@ -1,6 +1,6 @@
-# Sensor Data Queries
+## Sensor Data Queries
 
-## `GET /v1/api/sensor-networks/<network_name>/query`
+## -- `GET /v1/api/sensor-networks/<network_name>/query`
 
 > All temperature readings from HTU21D sensors on nodes 000 and 011 in the array_of_things network
 
@@ -20,7 +20,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?features_of_intere
       "end_datetime": "2016-09-06T17:55:32.503935",
       "offset": 0,
       "sensors": [
-        "HTU21D"
+        "htu21d"
       ],
       "network_name": "array_of_things",
       "nodes": [
@@ -35,7 +35,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?features_of_intere
     {
       "feature_of_interest": "temperature",
       "node_id": "011",
-      "sensor": "HTU21D",
+      "sensor": "htu21d",
       "meta_id": 54,
       "results": {
         "temperature": 30.12

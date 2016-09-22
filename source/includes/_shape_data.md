@@ -1,6 +1,6 @@
-# Shape Data Queries
+## Shape Data Queries
 
-## `GET /v1/api/shapes/<dataset_name>`
+## -- `GET /v1/api/shapes/<dataset_name>`
 
 > ### Example Queries
 
@@ -15,14 +15,14 @@ Request shapes from a [shape dataset](#dataset-types).
 Returns all records in the dataset by default.
 You can also apply a spatial filter or [filter on attributes](#attribute-filtering) to request a subset.
 
-### Common Query Syntax
+_Common Query Syntax_
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
 | [**location_geom__within**](#space-filtering) | no | none
 | [**[dataset_name]__filter**](#specifying-a-dataset) | no | none
 
-### Endpoint-Specific Parameters
+_Endpoint-Specific Parameters_
 
 | Parameter Name       | Parameter Default | Parameter Description                                                           |
 |----------------------|-------------------|---------------------------------------------------------------------------------|
