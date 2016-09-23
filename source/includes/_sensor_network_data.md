@@ -115,3 +115,115 @@ either the **data** or **error** field will be returned, not both
 | **datetime**      | Time at which the reading was taken        |
 | **results**      | JSON of the feature of interest’s properties and measured values.       |
 | **meta_id**     | Integer identifier for the node configuration and calibration information that generated the reading.        |
+
+## -- GET `/v1/api/sensor-networks/<network-name>/aggregate?<args>`
+
+> Standard deviations of gas concentrations from sensor_dev_3 on node_dev_2 for the past day
+
+```
+http://plenar.io/v1/api/sensor-networks/plenario_development/
+aggregate?features_of_interest=gas_concentration&node=node_dev_2
+&function=std&sensors=sensor_dev_3
+```
+
+```json
+{
+    "meta": {
+        "query": {
+            "node": "node_dev_2",
+            "function": "std",
+            "start_datetime": "2016-09-22T15:42:33.147232",
+            "agg": "hour",
+            "feature": [
+                "gas_concentration"
+            ],
+            "end_datetime": "2016-09-23T15:42:33.147302",
+            "sensors": [
+                "sensor_dev_3"
+            ],
+            "network_name": "plenario_development"
+        },
+        "message": [ ],
+        "total": 24
+    },
+    "data": [
+        {
+            "count": 0,
+            "time_bucket": "2016-09-22T15:00:00"
+        },
+        {
+            "...": "..."
+        },
+        {
+            "n2": {
+                "std": 0.285770076888335,
+                "count": 448
+            },
+            "co2": {
+                "std": 0.289637279773448,
+                "count": 448
+            },
+            "time_bucket": "2016-09-22T18:00:00"
+        },
+        {
+            "...": "..."
+        },
+        {
+            "n2": {
+                "std": 0.281392701124023,
+                "count": 287
+            },
+            "co2": {
+                "std": 0.299980627541392,
+                "count": 287
+            },
+            "time_bucket": "2016-09-23T08:00:00"
+        },
+        {
+            "...": "..."
+        },
+        {
+            "count": "0",
+            "time_bucket": "2016-09-23T14:00:00"
+        }
+    ]
+}
+```
+
+This endpoint lets you see historcal trends by aggregating individual
+node observations up to larger units of time. This is done by applying 
+one of the provided aggregate functions on all observations found within
+a specified window of time. 
+
+### Endpoint-Specific Parameters
+
+| **Parameter Name**       | **Required?** | **Parameter Default** | **Parameter Description**                       |
+| ------------------------ | ------------- | --------------------- | ----------------------------------------------- |
+| **node**                 | Yes           | None                  | Target node                                     |
+| **function**             | Yes           | None                  | Aggregate function to apply                     |
+| **features_of_interest** | Yes           | None                  | Node feature to aggregate                       |
+| **sensors**              | No            | All sensors           | Narrows features to only those on these sensors |
+| **start_datetime**       | No            | Yesterday's datetime  | Beginning of observation window                 |
+| **end_datetime**         | No            | Current datetime      | End of observation window                       |
+
+### Responses
+
+| **Attribute Name** | **Attribute Description**                             |
+| ------------------ | ----------------------------------------------------- |
+| **meta**           | Holds meta information about the query and its result |
+| **meta.query**     | Query parameters used                                 |
+| **meta.message**   | Server issued information such as warnings            |
+| **meta.total**     | Total number of aggregate records retrieved           |
+| **data**           | Holds result information from a successful query      |
+| **error**          | Holds error information from a failed query           |
+
+### Available Aggregates
+
+| **key** | **Description**    |
+| ------- | ------------------ |
+| **avg** | average	       | 
+| **std** | standard deviation |
+| **var** | variance	       |
+| **min** | minimum	       | 
+| **max** | maximum	       |
+| **med** | median	       |
