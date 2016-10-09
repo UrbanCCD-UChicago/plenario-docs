@@ -73,7 +73,7 @@ Plenario uses the sensor networks' hierarchies for organization.
 }
 ```
 
-![metadatamodel](https://cloud.githubusercontent.com/assets/19937363/18366166/3a8cc5e4-75db-11e6-83ea-027afaef6f0e.png)
+![metadatamodel](images/sensor-overview.svg)
 
 Each sensor network in Plenario has _nodes_, devices installed at some physical location.
 Nodes have _sensors_ that report on physical properties like temperature.
