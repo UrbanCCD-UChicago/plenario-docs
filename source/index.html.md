@@ -22,11 +22,10 @@ includes:
   - temporal_aggregation
   - spatial_aggregation
   - sensor_network
-  - sensor_network_high_level_metadata
-  - sensor_network_detailed_metadata
+  - sensor_network_metadata
   - sensor_network_data
+  - sensor_bulk_export
   - sensor_data_streaming
-  - sensor_network_aggregation
   - weather
 
 search: true

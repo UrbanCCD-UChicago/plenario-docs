@@ -1,6 +1,8 @@
-## Sensor Data Queries
+## HTTP Data Queries
 
-## -- `GET /v1/api/sensor-networks/<network_name>/query`
+## -- Raw Observations
+
+`GET /v1/api/sensor-networks/<network_name>/query`
 
 > All temperature readings from HTU21D sensors on nodes 000 and 011 in the array_of_things network
 
@@ -116,7 +118,9 @@ either the **data** or **error** field will be returned, not both
 | **results**      | JSON of the feature of interest’s properties and measured values.       |
 | **meta_id**     | Integer identifier for the node configuration and calibration information that generated the reading.        |
 
-## -- GET `/v1/api/sensor-networks/<network-name>/aggregate?<args>`
+## -- Timeseries
+
+`/v1/api/sensor-networks/<network-name>/aggregate?<args>`
 
 > Standard deviations of gas concentrations from sensor_dev_3 on node_dev_2 for the past day
 
@@ -190,10 +194,10 @@ aggregate?features_of_interest=gas_concentration&node=node_dev_2
 }
 ```
 
-This endpoint lets you see historcal trends by aggregating individual
-node observations up to larger units of time. This is done by applying 
+This endpoint lets you see historical trends by aggregating individual
+node observations up to larger units of time. This is done by applying
 one of the provided aggregate functions on all observations found within
-a specified window of time. 
+a specified window of time.
 
 ### Endpoint-Specific Parameters
 
@@ -221,9 +225,9 @@ a specified window of time.
 
 | **key** | **Description**    |
 | ------- | ------------------ |
-| **avg** | average	       | 
+| **avg** | average	       |
 | **std** | standard deviation |
 | **var** | variance	       |
-| **min** | minimum	       | 
+| **min** | minimum	       |
 | **max** | maximum	       |
 | **med** | median	       |

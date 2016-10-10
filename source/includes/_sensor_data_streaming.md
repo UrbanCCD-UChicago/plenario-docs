@@ -1,4 +1,4 @@
-## Sensor Data Streaming
+## Streaming Data Queries
 
 > `data` event format
 
@@ -15,7 +15,10 @@
 }
 ```
 
-Plenario utilizes the [socket.io protocol](https://github.com/socketio/socket.io-protocol) in order to provide near real time streaming of sensor data. A user may specify lists of nodes, features_of_interest, and/or sensors. They will then only be streamed data that satisfies these parameters. If no parameters are specified, the default is to stream all data from the array_of_things network.
+Plenario uses the [socket.io protocol](https://github.com/socketio/socket.io-protocol) to provide near real-time streaming of sensor data.
+A user may open a socket and specify nodes, features of interest, and sensors they're interested in.
+Plenario will push observations that satisfies their filters to their socket.
+If no parameters are specified, the default is to stream all data from the array_of_things network.
 
 Any invalid parameters and other errors will be emitted as JSON `internal_error` events and no connection will be created. If all parameters are valid and no errors occur, the client will begin receiving `data` events from the socket.
 
@@ -24,7 +27,7 @@ Any invalid parameters and other errors will be emitted as JSON `internal_error`
 > **Sample Node.js client** using the [socket.io-client](http://socket.io/docs/) module
 
 ```javascript
-var socket = require('socket.io-client')('http://streaming.plenar.io?' +
+var socket = require('socket.io-client')('ws://streaming.plenar.io?' +
     'sensor_network=array_of_things&' +
     'features_of_interest=temperature&' +
     'nodes=00A,00B&' +
