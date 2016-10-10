@@ -22,7 +22,9 @@ that sensor will still be visible in that node's `sensors` property.
 
 Either the **data** or **error** field will be returned, but not both.
 
-## -- `sensor-networks/<network_name>`
+## -- Sensor Networks
+
+`sensor-networks/<network_name>`
 
 > Network metadata for the array_of_things sensor network
 
@@ -71,7 +73,7 @@ all sensor networks.
 | **sensors**      | Array of all sensor models within the network.       |
 | **features_of_interest**     | Array of all features of interest that the network measures.        |
 
-## -- Sensor Networks
+## -- Nodes
 
 `GET /v1/api/sensor-networks/<network_name>/nodes/<node_id>`
 
