@@ -12,19 +12,19 @@ that sensor will still be visible in that node's `sensors` property.
 
 ### Responses
 
-| **Attribute Name** | **Attribute Description**                              |
-| ------------------ | ------------------------------------------------------ |
-| **query**          | Shows values used in the query.                        |
-| **message**        | Reports warnings (if any).                   |
-| **total**          | Total number of records found.                         |
-| **data**      | Contains records        |
-| **error**     | Contains any errors        |
+| **Attribute Name** | **Attribute Description**       |
+| ------------------ | ------------------------------- |
+| **query**          | Shows values used in the query. |
+| **message**        | Reports warnings (if any).      |
+| **total**          | Total number of records found.  |
+| **data**           | Contains records                |
+| **error**          | Contains any errors             |
 
 Either the **data** or **error** field will be returned, but not both.
 
 ## -- Sensor Networks
 
-`sensor-networks/<network_name>`
+`sensor-networks/<network>`
 
 > Network metadata for the array_of_things sensor network
 
@@ -36,7 +36,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things
 {
   "meta": {
     "query": {
-      "network_name": "array_of_things"
+      "network": "array_of_things"
     },
     "message": [ ],
     "total": 1
@@ -51,7 +51,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things
         "000",
         "011"
       ],
-      "features_of_interest": [
+      "features": [
         "temperature"
       ],
       "name": "array_of_things"
@@ -65,17 +65,17 @@ all sensor networks.
 
 ### Responses
 
-| **Attribute Name** | **Attribute Description**                              |
-| ------------------ | ------------------------------------------------------ |
-| **name**          | Sensor network name.                        |
-| **info**        | JSON containing any information provided by the network maintainer.                   |
-| **nodes**          | Array of node IDs for all nodes within the network.                         |
-| **sensors**      | Array of all sensor models within the network.       |
-| **features_of_interest**     | Array of all features of interest that the network measures.        |
+| **Attribute Name** | **Attribute Description**                                           |
+| ------------------ | ------------------------------------------------------------------- |
+| **name**           | Sensor network name.                                                |
+| **info**           | JSON containing any information provided by the network maintainer. |
+| **nodes**          | Array of node IDs for all nodes within the network.                 |
+| **sensors**        | Array of all sensor models within the network.                      |
+| **features**       | Array of all features of interest that the network measures.        |
 
 ## -- Nodes
 
-`GET /v1/api/sensor-networks/<network_name>/nodes/<node_id>`
+`GET /v1/api/sensor-networks/<network>/nodes/<node>`
 
 > Node metadata for node 011 in the array_of_things network
 
@@ -87,7 +87,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/011
 {
   "meta": {
     "query": {
-      "network_name": "array_of_things"
+      "network": "array_of_things"
     },
     "message": [ ],
     "total": 1
@@ -105,7 +105,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/011
       "sensors": [
         "tmp112"
       ],
-      "network_name": "array_of_things",
+      "network": "array_of_things",
       "id": "011"
     }
   ]
@@ -114,7 +114,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/011
 > Node metadata for all nodes in the array_of_things network within the given geometry
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/?location_geom__within={"type":"Polygon","coordinates”:[[[40.0, -90.0],[45.0, -90.0],[45.0, -85.0],[40.0, -85.0]]]}
+http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/?geom={"type":"Polygon","coordinates”:[[[40.0, -90.0],[45.0, -90.0],[45.0, -85.0],[40.0, -85.0]]]}
 ```
 
 ```json
@@ -122,7 +122,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/?location_geom__wi
   "meta": {
     "query": {
       "geom": {"type": "Polygon", "coordinates": [[[40.0, -90.0], [45.0, -90.0], [45.0, -85.0], [40.0, -85.0]]]},
-      "network_name": "array_of_things"
+      "network": "array_of_things"
     },
     "message": [ ],
     "total": 5
@@ -143,7 +143,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/?location_geom__wi
         			"height_in_meters": "5"
         		},
               "sensors": ["tmp421", "hmc5883l"],
-              "network_name": "array_of_things",
+              "network": "array_of_things",
               "id": "011"
           }
       },
@@ -152,40 +152,40 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/?location_geom__wi
 }
 ```
 
-If no node_id or location_geom__within is specified, the default is to return metadata for
+If no node_id or geom is specified, the default is to return metadata for
 all nodes within the network
 
 ### Common Query Syntax
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
-| [**location_geom__within**](#space-filtering) | no | none
+| [**geom**](#space-filtering) | no | none
 
 ### Responses
 
-| **Attribute Name** | **Attribute Description**                              |
-| ------------------ | ------------------------------------------------------ |
-| **id**          | Node identifier.                        |
-| **network_name**        | Name of the network that maintains the node.                   |
-| **info**          | JSON containing any information provided by the network maintainer.                         |
-| **geometry**      | GeoJSON object giving the node’s location.       |
-| **sensors**     | Array of all sensors that the node has contained.        |
+| **Attribute Name** | **Attribute Description**                                           |
+| ------------------ | ------------------------------------------------------------------- |
+| **id**             | Node identifier.                                                    |
+| **network_name**   | Name of the network that maintains the node.                        |
+| **info**           | JSON containing any information provided by the network maintainer. |
+| **geometry**       | GeoJSON object giving the node’s location.                          |
+| **sensors**        | Array of all sensors that the node has contained.                   |
 
 ## -- Features of Interest
 
-`GET /v1/api/sensor-networks/<network_name>/features_of_interest/<feature>`
+`GET /v1/api/sensor-networks/<network>/features/<feature>`
 
 > Feature of interest metadata for temperature
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/features_of_interest/temperature
+http://plenar.io/v1/api/sensor-networks/array_of_things/features/temperature
 ```
 
 ```json
 {
   "meta": {
     "query": {
-      "network_name": "array_of_things",
+      "network": "array_of_things",
       "feature": "temperature"
     },
     "message": [ ],
@@ -194,7 +194,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/features_of_interest/tem
   "data": [
     {
       "name": "temperature",
-      "observed_properties": [
+      "properties": [
         {
           "type": "float",
           "name": "temperature",
@@ -210,16 +210,22 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/features_of_interest/tem
 If no feature is specified, the default is to return metadata for
 all features of interest within the network
 
+### Common Query Syntax
+
+|**Parameter Name**            | **Required?** | **Default** |
+|----------------------------- | --------------| ----------- |
+| [**geom**](#space-filtering) | no            | none        |
+
 ### Responses
 
 | **Attribute Name** | **Attribute Description**                              |
 | ------------------ | ------------------------------------------------------ |
-| **name**          | Feature of interest name.                        |
-| **observed_properties**        | Array of JSON objects containing property names, types, units, and any other necessary description.  |
+| **name**           | Feature of interest name.                              |
+| **properties**     | Array of JSON objects containing property names, types, units, and any other necessary description.  |
 
 ## -- Sensors
 
-`GET /v1/api/sensor-networks/<network_name>/sensors/<sensor>`
+`GET /v1/api/sensor-networks/<network>/sensors/<sensor>`
 
 > Sensor metadata for sensor model TMP112
 
@@ -231,7 +237,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/sensors/TMP112
 {
   "meta": {
     "query": {
-      "network_name": "array_of_things",
+      "network": "array_of_things",
       "sensor": "tmp112"
     },
     "message": [ ],
@@ -241,7 +247,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/sensors/TMP112
     {
       "info": { },
       "name": "tmp112",
-      "observed_properties": [
+      "properties": [
         "temperature.temperature"
       ]
     }
@@ -252,10 +258,16 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/sensors/TMP112
 If no single sensor is specified, the default is to return metadata for
 all sensors within the network
 
+### Common Query Syntax
+
+| **Parameter Name**           | **Required?** | **Default** |
+| ---------------------------- | ------------- | ----------- |
+| [**geom**](#space-filtering) | no            | none        |
+
 ### Responses
 
-| **Attribute Name** | **Attribute Description**                              |
-| ------------------ | ------------------------------------------------------ |
-| **name**          | Name of sensor model.                        |
-| **info**          | JSON containing any information provided by the network maintainer.                         |
-| **observed_properties**      | Array of properties measured by the sensor in the format `feature_of_interest`.`observed_property`       |
+| **Attribute Name** | **Attribute Description**                                                     |
+| ------------------ | ----------------------------------------------------------------------------- |
+| **name**           | Name of sensor model.                                                         |
+| **info**           | JSON containing any information provided by the network maintainer.           |
+| **properties**     | Array of properties measured by the sensor in the format `feature`.`property` |

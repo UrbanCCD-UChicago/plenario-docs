@@ -2,12 +2,12 @@
 
 ## -- Raw Observations
 
-`GET /v1/api/sensor-networks/<network_name>/query`
+`GET /v1/api/sensor-networks/<network>/query`
 
 > All temperature readings from HTU21D sensors on nodes 000 and 011 in the array_of_things network
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/query?features_of_interest=temperature&sensors=HTU21D&nodes=000,011
+http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature&sensors=HTU21D&nodes=000,011
 ```
 
 ```json
@@ -15,16 +15,14 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?features_of_intere
   "meta": {
     "query": {
       "start_datetime": "2016-06-08T17:55:32.503905",
-      "features_of_interest": [
-        "temperature"
-      ],
+      "feature": "temperature",
       "limit": 1000,
       "end_datetime": "2016-09-06T17:55:32.503935",
       "offset": 0,
       "sensors": [
         "htu21d"
       ],
-      "network_name": "array_of_things",
+      "network": "array_of_things",
       "nodes": [
         "000",
         "011"
@@ -35,8 +33,8 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?features_of_intere
   },
   "data": [
     {
-      "feature_of_interest": "temperature",
-      "node_id": "011",
+      "feature": "temperature",
+      "node": "011",
       "sensor": "htu21d",
       "meta_id": 54,
       "results": {
@@ -51,7 +49,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?features_of_intere
 > All readings from the array_of_things network in December 2016 within the given geometry
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/query?location_geom__within={"type":"Polygon","coordinates":[[[40.0, -90.0],[45.0,-90.0],[45.0, -85.0],[40.0, -85.0]]]}&start_datetime=2016-12-1T00:00:00.000&end_datetime=2017-1-1T00:00:00.000
+http://plenar.io/v1/api/sensor-networks/array_of_things/query?geom={"type":"Polygon","coordinates":[[[40.0, -90.0],[45.0,-90.0],[45.0, -85.0],[40.0, -85.0]]]}&start_datetime=2016-12-1T00:00:00.000&end_datetime=2017-1-1T00:00:00.000
 
 ```
 
@@ -64,15 +62,15 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?location_geom__wit
       "geom": {"type":"Polygon","coordinates":[[[40.0, -90.0],[45.0,-90.0],[45.0, -85.0],[40.0, -85.0]]]},
       "end_datetime": "2017-1-1T00:00:00.000",
       "offset": 0,
-      "network_name": "array_of_things"
+      "network": "array_of_things"
     },
     "message": [],
     "total": 1000
   },
   "data": [
     {
-      "feature_of_interest": "temperature",
-      "node_id": "029",
+      "feature": "temperature",
+      "node": "029",
       "sensor": "TMP112",
       "meta_id": 11,
       "results": {
@@ -87,46 +85,47 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?location_geom__wit
 
 ### Common Query Syntax
 
-|**Parameter Name**  | **Required?** | **Default**
-|--------------- | -----------------| ---
-| [**nodes**](#nodes) | no | all nodes in network
-| [**sensors**](#sensors) | no | all sensors in network
-| [**features_of_interest**](#features-of-interest) | no | all features reported on by network
-| [**location_geom__within**](#space-filtering) | no | none
-| [**start_datetime** & **end_datetime**](#sensor-network-time-filtering) | no | 90 days ago - now
+|**Parameter Name**                                    | **Required?** | **Default**            |
+|----------------------------------------------------- | ------------- | ---------------------- |
+| [**feature**](#features-of-interest)                 | yes           | none                   |
+| [**nodes**](#nodes)                                  | no            | all nodes in network   |
+| [**sensors**](#sensors)                              | no            | all sensors in network |
+| [**geom**](#space-filtering)                         | no            | none                   |
+| [**start_datetime**](#sensor-network-time-filtering) | no            | 90 days ago            |
+/ [**end_datetime**](#sensor-network-time-filtering)   | no            | now                    |
 
 ### Responses
 
-| **Attribute Name** | **Attribute Description**                              |
-| ------------------ | ------------------------------------------------------ |
-| **query**          | Shows values used in the query.                        |
-| **message**        | Reports warnings (if any).                   |
-| **total**          | Total number of records found.                         |
-| **data**      | Contains records        |
-| **error**     | Contains any errors        |
+| **Attribute Name** | **Attribute Description**       |
+| ------------------ | ------------------------------- |
+| **query**          | Shows values used in the query. |
+| **message**        | Reports warnings (if any).      |
+| **total**          | Total number of records found.  |
+| **data**           | Contains records                |
+| **error**          | Contains any errors             |
 
 either the **data** or **error** field will be returned, not both
 
 ### Data Format
 
-| **Attribute Name** | **Attribute Description**                              |
-| ------------------ | ------------------------------------------------------ |
-| **node_id**          | ID of the node that generated the result.                        |
-| **sensor**        | Sensor model that generated the result.                   |
-| **feature_of_interest**          | Feature of interest that the result measures.                         |
-| **datetime**      | Time at which the reading was taken        |
-| **results**      | JSON of the feature of interest’s properties and measured values.       |
-| **meta_id**     | Integer identifier for the node configuration and calibration information that generated the reading.        |
+| **Attribute Name** | **Attribute Description**                                                                             |
+| ------------------ | ----------------------------------------------------------------------------------------------------- |
+| **node**           | ID of the node that generated the result.                                                             |
+| **sensor**         | Sensor model that generated the result.                                                               |
+| **features**       | Feature of interest that the result measures.                                                         |
+| **datetime**       | Time at which the reading was taken                                                                   |
+| **results**        | JSON of the feature of interest’s properties and measured values.                                     |
+| **meta_id**        | Integer identifier for the node configuration and calibration information that generated the reading. |
 
 ## -- Timeseries
 
-`/v1/api/sensor-networks/<network-name>/aggregate?<args>`
+`/v1/api/sensor-networks/<network>/aggregate?<args>`
 
 > Standard deviations of gas concentrations from sensor_dev_3 on node_dev_2 for the past day
 
 ```
 http://plenar.io/v1/api/sensor-networks/plenario_development/
-aggregate?features_of_interest=gas_concentration&node=node_dev_2
+aggregate?feature=gas_concentration&node=node_dev_2
 &function=std&sensors=sensor_dev_3
 ```
 
@@ -145,7 +144,7 @@ aggregate?features_of_interest=gas_concentration&node=node_dev_2
             "sensors": [
                 "sensor_dev_3"
             ],
-            "network_name": "plenario_development"
+            "network": "plenario_development"
         },
         "message": [ ],
         "total": 24
@@ -205,7 +204,7 @@ a specified window of time.
 | ------------------------ | ------------- | --------------------- | ----------------------------------------------- |
 | **node**                 | Yes           | None                  | Target node                                     |
 | **function**             | Yes           | None                  | Aggregate function to apply                     |
-| **features_of_interest** | Yes           | None                  | Node feature to aggregate                       |
+| **feature**              | Yes           | None                  | Node feature to aggregate                       |
 | **sensors**              | No            | All sensors           | Narrows features to only those on these sensors |
 | **start_datetime**       | No            | Yesterday's datetime  | Beginning of observation window                 |
 | **end_datetime**         | No            | Current datetime      | End of observation window                       |
@@ -225,9 +224,9 @@ a specified window of time.
 
 | **key** | **Description**    |
 | ------- | ------------------ |
-| **avg** | average	       |
+| **avg** | average	           |
 | **std** | standard deviation |
 | **var** | variance	       |
-| **min** | minimum	       |
-| **max** | maximum	       |
-| **med** | median	       |
+| **min** | minimum	           |
+| **max** | maximum	           |
+| **med** | median	           |
