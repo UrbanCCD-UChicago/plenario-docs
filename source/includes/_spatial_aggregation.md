@@ -1,6 +1,8 @@
 ## Spatial Aggregation
 
-## -- `GET v1/api/grid`
+## -- Heat Map
+
+`GET v1/api/grid`
 
 > Heat map of Chicago 311 tree trim requests in 2014
 
@@ -50,7 +52,7 @@ http://plenar.io/v1/api/grid/?obs_date__ge=2014-01-01&obs_date__le=2014-12-31&da
 
    ]
 }
-~~~~
+```
 
 Create a GeoJSON grid heatmap from an event dataset.
 See example grid heatmaps in the [Plenario explorer](http://plenar.io/explore/event/bristol_crime_stats?obs_date__ge=2014-01-31&obs_date__le=2014-05-01).
@@ -73,12 +75,14 @@ All query parameters are optional except for `dataset_name`.
 | **resolution**         | 500               | Square grid size (in meters).                                                                                                                                                                                      |
 | **buffer**               | 100               | If `location###within` is a [GeoJSON LineString](http://geojson.org/geojson-spec.html#linestring), the size of the buffer around that line to query (in meters).                                               |
 
-###
+### Response
 
 **See right**. Plenario will output a GeoJSON with a feature for each grid square containing
 a `count` property of the number of observations within that square.
 
-## -- `GET /v1/api/shapes/<polygon_dataset_name>/<point_dataset_name>/`
+## -- Choropleth
+
+`GET /v1/api/shapes/<polygon_dataset_name>/<point_dataset_name>/`
 
 > Count the number of historical landmarks in each Chicago neighborhood.
 
@@ -113,7 +117,7 @@ Given an [event dataset and a polygon dataset](#dataset-types), return a documen
 polygons in the polygon dataset together with the counts of the points that
 intersect them.
 Like `/grid`, except using shapes defined in Plenario as opposed to an automatically generated grid.
-Returns GeoJSON by default for easy heatmapping.
+Returns GeoJSON by default.
 
 ### Query Parameters
 

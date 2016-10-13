@@ -1,6 +1,8 @@
 ## Event Data Queries
 
-## -- `GET /v1/api/detail`
+## -- Event Records
+
+`GET /v1/api/detail`
 
 > All Chicago homicides since May 1<sup>st</sup>, 2016
 
@@ -58,7 +60,7 @@ http://plenar.io/v1/api/detail/?dataset_name=crimes_2001_to_present&obs_date__ge
 
 Query an [event dataset](#dataset-types) and get back the raw individual records.
 
-## -- Common Query Syntax
+### -- Common Query Syntax
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
@@ -114,8 +116,15 @@ If you want to get the geometry Plenario has parsed,
 use the `data_type` parameter to specify `geojson`.
 Plenario will return each record as a GeoJSON point with the parsed latitude and longitude in the `coordinates` object and the original values in the `attributes` object.
 
-## -- Plenario Datadump
+## -- Bulk Export
 
-> The `datadump` endpoint is housed on Plenario's backend; access it through [Plenario's Explore feature](http://plenar.io/explore/discover) by selecting a dataset and choosing Download.
+`GET /v1/api/datadump`
 
-Plenario Datadump is a streamlined method of downloading large (above 1000 results) data in both CSV and JSON format. Compare this to the existing `detail` endpoint; due to HTTP timeouts and other limitations, `detail` only returns a pre-specified number of rows, and it was necessary to page through these rows in order to access all the data. Instead, Plenario Datadump takes advantage of the long-running queries enabled by the Jobs Framework to dump the entire query into a file, allowing the query to be downloaded later as one unit. Plenario Datadump is located at the `/datadump` endpoint, and takes the same query parameters as `detail`. `jobs=true` is implied, so you do not need to use it explicitly.
+Because the raw data endpoint `/detail` is designed to respond quickly,
+it is limited to 1000 observations.
+If you want to download all records of an event dataset that meet the filter you have provided, you can request a bulk export with `/datadump`.
+
+`/datadump` returns a ticket that you can use to check on your request's progress at `/v1/api/jobs/{ticket}`.
+When the export is complete, `/v1/api/jobs/{ticket}` will give you a link where you can download the file.
+
+`/datadump` takes the same query parameters as `/detail`.

@@ -1,11 +1,13 @@
 ## Metadata Endpoints
 
-## -- `GET /v1/api/datasets/`
+## -- Event Datasets
+
+`GET /v1/api/datasets/`
 
 > ### Example Query
 
 ```
-http://plenar.io/v1/api/datasets/
+http://plenar.io/v1/api/datasets
 ```
 
 > List of all event datasets.
@@ -102,7 +104,9 @@ One record per event dataset.
 | **dataset_name**   	| Machine name for the dataset. The name you need to supply in other endpoints.
 | **update_freq**    	| How often Plenario checks the source dataset for updates.                                                                        	|
 
-## -- `GET /v1/api/shapes`
+## -- Shape Datasets
+
+`GET /v1/api/shapes`
 
 > ### Example Query
 
@@ -173,7 +177,9 @@ One record per shape dataset.
 | **update_freq**    | Update frequency                                              |
 |**columns**| Name and type of each column.
 
-## -- `GET /v1/api/fields/<dataset_name>/`
+## -- Dataset Fields
+
+`GET /v1/api/fields/<dataset_name>/`
 
 > ### Example Query
 

@@ -1,6 +1,8 @@
 ## Temporal Aggregation
 
-## -- `GET v1/api/timeseries`
+## -- Timeseries
+
+`GET v1/api/timeseries`
 
 > Generate counts of crime and environmental complaints per year from 2010 to 2015.
 
@@ -131,7 +133,9 @@ Many of the [metadata attributes](#get-v1-api-datasets) from `/datasets` are inc
 | **datetime**       | Date of aggregation
 | **items**          | Counts of aggregated records and delimiting datetimes. |
 
-## -- `GET v1/api/detail-aggregate/`
+### Deprecated Version 
+
+`GET v1/api/detail-aggregate/`
 
 _This endpoint is deprecated in favor of `/timeseries`_
 

@@ -3,13 +3,15 @@
 `GET /v1/api/sensor-networks/<network>/download`
 
 Because the raw data endpoint /query is designed to respond quickly,
-it is by default limited to 1000 observations. This limit can be
-increased, but we impose a hard cap of 10000.
+it is by limited to 10000 observations.
 
 It also only lets you query over one feature of interest per call.
-If you want a larger dump of data, potentially over a long period 
-of time and over many features, you can use /download to request a 
+If you want a larger dump of data, potentially over a long period
+of time and over many features, you can use /download to request a
 bulk export.
+
+/download returns a ticket that you can use to check on your request's progress at `/v1/api/jobs/{ticket}`.
+When the export is complete, `/v1/api/jobs/{ticket}` will give you a link where you can download the file.
 
 ```json
 {
@@ -60,6 +62,3 @@ bulk export.
 | **query**          | Shows values used in the query |
 | **result**         | On success, the download link  |
 | **error**          | Contains any errors            |
-
-/download returns a ticket that you can use to check on your request's progress at `/v1/api/jobs/{ticket}`.
-When the export is complete, `/v1/api/jobs/{ticket}` will give you a link where you can download the file.

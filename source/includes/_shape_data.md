@@ -1,6 +1,8 @@
 ## Shape Data Queries
 
-## -- `GET /v1/api/shapes/<dataset_name>`
+## -- Shape Records
+
+`GET /v1/api/shapes/<dataset_name>`
 
 > ### Example Queries
 
