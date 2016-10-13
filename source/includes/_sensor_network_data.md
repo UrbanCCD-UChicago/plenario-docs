@@ -92,7 +92,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?geom={"type":"Poly
 | [**sensors**](#sensors)                              | no            | all sensors in network |
 | [**geom**](#space-filtering)                         | no            | none                   |
 | [**start_datetime**](#sensor-network-time-filtering) | no            | 90 days ago            |
-/ [**end_datetime**](#sensor-network-time-filtering)   | no            | now                    |
+| [**end_datetime**](#sensor-network-time-filtering)   | no            | now                    |
 
 ### Responses
 

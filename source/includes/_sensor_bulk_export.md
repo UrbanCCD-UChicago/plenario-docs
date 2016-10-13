@@ -23,8 +23,8 @@ bulk export.
   "request": {
     "query": {
       "start_datetime": "2016-07-15t17:51:47.978722",
-      "network": "plenario_development",
-      "datadump_urlroot": "http://plenario-app-venusaur.us-east-1.elasticbeanstalk.com/",
+      "network": "array_of_things",
+      "datadump_urlroot": "http://plenar.io/",
       "query_fn": "aot_point",
       "limit": 1000,
       "end_datetime": "2016-10-13t17:51:47.978770",
@@ -48,7 +48,7 @@ bulk export.
 | [**sensors**](#sensors)                              | no            | all sensors in network |
 | [**geom**](#space-filtering)                         | no            | none                   |
 | [**start_datetime**](#sensor-network-time-filtering) | no            | 90 days ago            |
-/ [**end_datetime**](#sensor-network-time-filtering)   | no            | now                    |
+| [**end_datetime**](#sensor-network-time-filtering)   | no            | now                    |
 
 ### Responses
 
