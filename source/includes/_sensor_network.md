@@ -25,16 +25,20 @@
 ```
 Plenario lets you fetch data from sensor networks in different ways, depending on the needs of your application.
 
-If you're developing an application to let people explore data (like OpenGrid or our own demonstration app)
-the query and aggregate endpoints are designed to respond quickly, making them a good fit for web applications.
+If you're developing an application to let people explore data
+(like [OpenGrid](https://chicago.opengrid.io/opengrid/)
+or Plenario's [demonstration application](http://plenar.io/sensors))
+the [query and aggregate endpoints](#http-data-queries)
+are designed to respond quickly, making them a good fit for web applications.
 
 If you want to mirror the data from a network,
-you can use our Websocket API to receive all of a network's data as it arrives in Plenario.
-The Websocket API is also helpful for applications that send real time notifications
-and for real time dashboards.
+you can use our [Websocket API](#streaming-data-queries) to receive all of a network's data as it arrives in Plenario.
+The Websocket API is also helpful for applications that send real-time notifications
+and for real-time dashboards.
 
 And if you want a bulk export to load into your own database,
-you can use our download endpoint to specify the time period and sensors you're interested in,
+you can use our [download endpoint](#bulk-data-export)
+to specify the time period and sensors you're interested in,
 and Plenario will generate a flat file with that data.
 
 ### Sensor Network Structure
