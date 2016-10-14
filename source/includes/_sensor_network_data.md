@@ -90,8 +90,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperatur
 > All below freezing temperature readings from array_of_things network in the last 90 days
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature
-&filter={"prop": "temperature.temperature", "val": "0", "op": "le"}
+http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature&filter={"prop": "temperature.temperature", "val": "0", "op": "le"}
 ```
 
 ```json
