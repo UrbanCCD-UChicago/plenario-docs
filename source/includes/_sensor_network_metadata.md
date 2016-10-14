@@ -5,8 +5,8 @@ to construct valid queries on sensor data.
 Note that the metadata from these endpoints doesn't necessarily
 represent the current configuration of each sensor network.
 For example, if a node is up for a year and then removed,
-that node will still be visible in the `/nodes` endpoint so that
-you can find it and query the data collected while it was up.
+that node will still be visible in the `/nodes` endpoint.
+That way, you can still find it and query the data collected while it was up.
 Similarly, if a sensor is removed from a node,
 that sensor will still be visible in that node's `sensors` property.
 
@@ -25,6 +25,10 @@ Either the **data** or **error** field will be returned, but not both.
 ## -- Sensor Networks
 
 `sensor-networks/<network>`
+
+Retrieve metadata about one or many sensor networks that publish observations to Plenario.
+If no network is specified, metadata for
+all sensor networks will be returned.
 
 > Network metadata for the array_of_things sensor network
 
@@ -60,8 +64,11 @@ http://plenar.io/v1/api/sensor-networks/array_of_things
 }
 ```
 
-If no network_name is specified, the default is to return metadata for
-all sensor networks.
+A sensor network is a collection of sensor nodes maintained by one organization.
+Within a sensor network's metadata,
+you can find the IDs of nodes within the network
+and all of the features of interest those nodes report on.
+With this information, you can launch queries on features of interest or drill down further into the metadata by node.
 
 ### Responses
 
@@ -77,6 +84,10 @@ all sensor networks.
 
 `GET /v1/api/sensor-networks/<network>/nodes/<node>`
 
+Retrieve metadata about nodes in a sensor network.
+Nodes are formatted as GeoJSON,
+with non-spatial metadata stored in the each node's `properties` object.
+
 > Node metadata for node 011 in the array_of_things network
 
 ```
@@ -85,30 +96,34 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/011
 
 ```json
 {
-  "meta": {
-    "query": {
-      "network": "array_of_things"
+    "meta": {
+        "query": {
+            "network": "array_of_things"
+        },
+        "message": [],
+        "total": 1
     },
-    "message": [ ],
-    "total": 1
-  },
-  "data": [
-    {
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          41.9084,
-          -87.6214
-        ]
-      },
-      "info": { },
-      "sensors": [
-        "tmp112"
-      ],
-      "network": "array_of_things",
-      "id": "011"
-    }
-  ]
+    "data": [
+        {
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    41.9084,
+                    -87.6214
+                ]
+            },
+            "type": "Feature",
+            "properties": {
+                "info": {},
+                "sensors": [
+                    "tmp112"
+                ],
+                "network": "array_of_things",
+                "id": "011"
+            }
+        },
+        ...
+    ]
 }
 ```
 > Node metadata for all nodes in the array_of_things network within the given geometry
@@ -128,32 +143,43 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/?geom={"type":"Pol
     "total": 5
   },
   "data": [
-      {
-          "geometry": {
-              "type": "Point",
-              "coordinates": [
-                  -87.6298,
-                  41.8781
-              ]
-          },
-          "type": "Feature",
-          "properties": {
-              "info": {
-        			"orientation": "NE",
-        			"height_in_meters": "5"
-        		},
-              "sensors": ["tmp421", "hmc5883l"],
-              "network": "array_of_things",
-              "id": "011"
-          }
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.623177,
+          41.881832
+        ]
       },
-    ...
+      "type": "Feature",
+      "properties": {
+        "info": null,
+        "sensors": [
+          "sensor_dev_1",
+          "sensor_dev_4"
+        ],
+        "id": "node_dev_1",
+        "network": "array_of_things"
+          }
+    }
   ]
 }
 ```
+A node is a collection of one or more sensors
+reporting from a fixed location.
+Each node belongs to exactly one network.
 
-If no node_id or geom is specified, the default is to return metadata for
-all nodes within the network
+Get metadata about all nodes in a network,
+
+`sensor-networks/<network>/nodes`
+
+a specific node,
+
+`sensor-networks/<network>/nodes/<node>`
+
+or all nodes in a network within some geometry .
+
+`sensor-networks/<network>/nodes?geom=<geojson>`
 
 ### Common Query Syntax
 
@@ -175,40 +201,88 @@ all nodes within the network
 
 `GET /v1/api/sensor-networks/<network>/features/<feature>`
 
-> Feature of interest metadata for temperature
+Retrieve features of interest defined within a network.
+
+If no feature is specified, the default is to return metadata for
+all features of interest within the network
+
+> Feature of interest metadata for magnetic_field
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/features/temperature
+http://plenar.io/v1/api/sensor-networks/array_of_things/features/magnetic_field
 ```
 
 ```json
 {
-  "meta": {
-    "query": {
-      "network": "array_of_things",
-      "feature": "temperature"
+    "meta": {
+        "query": {
+            "network": "array_of_things",
+            "features": [
+                "magnetic_field"
+            ]
+        },
+        "message": [],
+        "total": 1
     },
-    "message": [ ],
-    "total": 1
-  },
-  "data": [
-    {
-      "name": "temperature",
-      "properties": [
-        {
-          "type": "float",
-          "name": "temperature",
-          "unit": "Degrees Celsius",
-          "description": "external air temperature"
-        }
-      ]
-    }
-  ]
+    "data": [
+      {
+        "name": "magnetic_field",
+        "observed_properties": [
+            {
+                "type": "float",
+                "name": "x",
+                "unit": "gauss"
+            },
+            {
+                "type": "float",
+                "name": "y",
+                "unit": "gauss"
+            },
+            {
+                "type": "float",
+                "name": "z",
+                "unit": "gauss"
+            }
+        ]
+      }
+    ]
 }
 ```
 
-If no feature is specified, the default is to return metadata for
-all features of interest within the network
+> An observation of magnetic_field
+
+```json
+{
+	"feature": "magnetic_field",
+	"node": "029",
+	"sensor": "hmc5883l",
+	"meta_id": 11,
+	"results": {
+		"x": 0.602,
+		"y": 0.613,
+		"z": 0.604
+	},
+	"datetime": "2016-12-25T00:54:18"
+}
+```
+
+A feature of interest defines properties of the world that sensors observe,
+like temperature or traffic.
+Every observation is tagged with a feature of interest,
+which determines how the observation is formatted.
+A feature called `traffic_count` might be composed of _observed properties_
+called `pedestrians`, `cars`, and `bicycles`.
+Then an observation of `traffic_count` can only report values labeled
+`pedestrians`, `cars`, and `bicycles`.
+
+A feature of interest must have one or more observed properties.
+Observed properties contain metadata like
+data type (float, int, boolean, or string) and unit of measurement that can help you interpret observations.
+Properties only define scalar values, so for features that are vector-valued,
+you will find each dimension defined as a separate feature.
+For example, the definition of `magnetic_field` to the right
+has separate properties for the x, y, and z dimensions.
+
 
 ### Common Query Syntax
 
@@ -228,6 +302,9 @@ all features of interest within the network
 `GET /v1/api/sensor-networks/<network>/sensors/<sensor>`
 
 > Sensor metadata for sensor model TMP112
+
+Retrieve metadata about sensors.
+If no sensor is specified, returns all sensors from the specified network.
 
 ```
 http://plenar.io/v1/api/sensor-networks/array_of_things/sensors/TMP112
@@ -255,8 +332,14 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/sensors/TMP112
 }
 ```
 
-If no single sensor is specified, the default is to return metadata for
-all sensors within the network
+A sensor is a piece of equipment that generates observations.
+Every observation is tagged with the sensor that generated it.
+The `info` object in sensor metadata contains general metadata
+like a link to the sensor's datasheet.
+The `properties` list contains all of the _observed_properties_
+that the sensor reports on, written as <feature>.<observed_property>.
+It is not enough to specify just the feature,
+because some sensors may report on only a subset of a feature's properties.
 
 ### Common Query Syntax
 

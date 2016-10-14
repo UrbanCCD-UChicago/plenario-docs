@@ -2,10 +2,9 @@
 
 `GET /v1/api/sensor-networks/<network>/download`
 
-Because the raw data endpoint /query is designed to respond quickly,
-it is by limited to 10000 observations.
+Because the [raw data endpoint /query](#raw-observations) is designed to respond quickly,
+it is limited to 10000 observations.It also only lets you query over one feature of interest per call.
 
-It also only lets you query over one feature of interest per call.
 If you want a larger dump of data, potentially over a long period
 of time and over many features, you can use /download to request a
 bulk export.

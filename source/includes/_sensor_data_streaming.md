@@ -4,11 +4,11 @@
 
 ```json
 {
-  "node_id": "00A",
+  "node": "00A",
   "meta_id": 11,
   "datetime": "2016-08-05T00:00:08.246000",
-  "sensor": "HTU21D",
-  "feature_of_interest": "temperature",
+  "sensor": "hti21D",
+  "feature": "temperature",
   "results": {     
       "temperature": 37.90
   }
@@ -29,7 +29,7 @@ Any invalid parameters and other errors will be emitted as JSON `internal_error`
 ```javascript
 var socket = require('socket.io-client')('ws://streaming.plenar.io?' +
     'sensor_network=array_of_things&' +
-    'features_of_interest=temperature&' +
+    'features=temperature&' +
     'nodes=00A,00B&' +
     'sensors=HTU21D');
 
@@ -49,7 +49,7 @@ from socketIO_client import SocketIO
 
 socketIO = SocketIO("streaming.plenar.io", params={
     'sensor_network': 'array_of_things',
-    'features_of_interest': 'temperature',
+    'features': 'temperature',
     'sensors': ['HTU21D'],
     'nodes': ['00A', '00B']})
 
@@ -105,6 +105,8 @@ public class Main {
 
 |**Parameter Name**  | **Required?** | **Default**
 |--------------- | -----------------| ---
+
+| [**sensor_network**](#sensor-networks) | yes | none
 | [**nodes**](#nodes) | no | all nodes in network
 | [**sensors**](#sensors) | no | all sensors in network
-| [**features_of_interest**](#features-of-interest) | no | all features reported on by network
+| [**features**](#features-of-interest) | no | all features reported on by network
