@@ -68,17 +68,17 @@ and Plenario will generate a flat file with that data.
 	    {
 	        "type": "float",
 	        "name": "x",
-			"unit": "gauss"
+			    "unit": "gauss"
 	    },
 	    {
 	        "type": "float",
 	        "name": "y",
-			"unit": "gauss"
+			    "unit": "gauss"
 	    },
 	    {
 	        "type": "float",
 	        "name": "z",
-			"unit": "gauss"
+			    "unit": "gauss"
 	    }
 	]
 }
