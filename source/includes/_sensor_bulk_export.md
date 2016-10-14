@@ -49,7 +49,7 @@ When the export is complete, `/v1/api/jobs/{ticket}` will give you a link where 
 | [**nodes**](#nodes)                                  | no            | all nodes in network   |
 | [**sensors**](#sensors)                              | no            | all sensors in network |
 | [**geom**](#space-filtering)                         | no            | none                   |
-| [**start_datetime**](#sensor-network-time-filtering) | no            | 90 days ago            |
+| [**start_datetime**](#sensor-network-time-filtering) | no            | 7 days ago             |
 | [**end_datetime**](#sensor-network-time-filtering)   | no            | now                    |
 
 ### Responses
