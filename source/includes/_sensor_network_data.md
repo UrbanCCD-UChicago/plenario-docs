@@ -1,10 +1,15 @@
 ## HTTP Data Queries
 
+These endpoints let you quickly fetch sensor observations
+or generate aggregates over a node's history.
+
 ## -- Raw Observations
 
 `GET /v1/api/sensor-networks/<network>/query`
 
-> All temperature readings from HTU21D sensors on nodes 000 and 011 in the array_of_things network
+> Temperature observations from HTU21D sensors on nodes 000 and 011 in the array_of_things network
+
+Get observations.
 
 ```
 http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature&sensors=HTU21D&nodes=000,011
@@ -46,10 +51,10 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperatur
   ]
 }
 ```
-> All readings from the array_of_things network in December 2016 within the given geometry
+> Temperature observations from the array_of_things network in December 2016 within the given geometry
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/query?geom={"type":"Polygon","coordinates":[[[40.0, -90.0],[45.0,-90.0],[45.0, -85.0],[40.0, -85.0]]]}&start_datetime=2016-12-1T00:00:00.000&end_datetime=2017-1-1T00:00:00.000
+http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature&geom={"type":"Polygon","coordinates":[[[40.0, -90.0],[45.0,-90.0],[45.0, -85.0],[40.0, -85.0]]]}&start_datetime=2016-12-1T00:00:00.000&end_datetime=2017-1-1T00:00:00.000
 
 ```
 
@@ -83,6 +88,11 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?geom={"type":"Poly
 }
 ```
 
+You must specify one feature of interest in the query parameters.
+All other parameters are optional.
+Response limit is 1000 by default, but can be set to a maximum of 10000.
+
+
 ### Common Query Syntax
 
 |**Parameter Name**                                    | **Required?** | **Default**            |
@@ -93,6 +103,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?geom={"type":"Poly
 | [**geom**](#space-filtering)                         | no            | none                   |
 | [**start_datetime**](#sensor-network-time-filtering) | no            | 90 days ago            |
 | [**end_datetime**](#sensor-network-time-filtering)   | no            | now                    |
+| [**limit**](#nodes)                                  | no            | 1000                   |
 
 ### Responses
 
@@ -151,42 +162,26 @@ aggregate?feature=gas_concentration&node=node_dev_2
     },
     "data": [
         {
-            "count": 0,
+          "n2": {
+              "std": 0.285770076888335,
+              "count": 448
+          },
+          "co2": {
+              "std": 0.289637279773448,
+              "count": 448
+          },
             "time_bucket": "2016-09-22T15:00:00"
         },
+        ...
         {
-            "...": "..."
-        },
-        {
-            "n2": {
-                "std": 0.285770076888335,
-                "count": 448
-            },
-            "co2": {
-                "std": 0.289637279773448,
-                "count": 448
-            },
-            "time_bucket": "2016-09-22T18:00:00"
-        },
-        {
-            "...": "..."
-        },
-        {
-            "n2": {
-                "std": 0.281392701124023,
-                "count": 287
-            },
-            "co2": {
-                "std": 0.299980627541392,
-                "count": 287
-            },
-            "time_bucket": "2016-09-23T08:00:00"
-        },
-        {
-            "...": "..."
-        },
-        {
-            "count": "0",
+          "n2": {
+              "std": 0.281392701124023,
+              "count": 287
+          },
+          "co2": {
+              "std": 0.299980627541392,
+              "count": 287
+          },
             "time_bucket": "2016-09-23T14:00:00"
         }
     ]
@@ -203,11 +198,12 @@ a specified window of time.
 | **Parameter Name**       | **Required?** | **Parameter Default** | **Parameter Description**                       |
 | ------------------------ | ------------- | --------------------- | ----------------------------------------------- |
 | **node**                 | Yes           | None                  | Target node                                     |
-| **function**             | Yes           | None                  | Aggregate function to apply                     |
+| **function**             | Yes           | None                  | Aggregate function to apply: see table below                     |
 | **feature**              | Yes           | None                  | Node feature to aggregate                       |
 | **sensors**              | No            | All sensors           | Narrows features to only those on these sensors |
 | **start_datetime**       | No            | Yesterday's datetime  | Beginning of observation window                 |
 | **end_datetime**         | No            | Current datetime      | End of observation window                       |
+| **agg**                  | No            | hour    | Size of time slices: one of minute, hour, day, week, month, year                      |
 
 ### Responses
 
@@ -220,13 +216,13 @@ a specified window of time.
 | **data**           | Holds result information from a successful query      |
 | **error**          | Holds error information from a failed query           |
 
-### Available Aggregates
+### Available Aggregate Functions
 
 | **key** | **Description**    |
 | ------- | ------------------ |
 | **avg** | average	           |
 | **std** | standard deviation |
-| **var** | variance	       |
+| **var** | variance	         |
 | **min** | minimum	           |
 | **max** | maximum	           |
 | **med** | median	           |

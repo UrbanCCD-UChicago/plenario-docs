@@ -253,8 +253,8 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/features/magnetic_field
 
 ```json
 {
-	"feature_of_interest": "magnetic_field",
-	"node_id": "029",
+	"feature": "magnetic_field",
+	"node": "029",
 	"sensor": "hmc5883l",
 	"meta_id": 11,
 	"results": {
@@ -337,7 +337,7 @@ Every observation is tagged with the sensor that generated it.
 The `info` object in sensor metadata contains general metadata
 like a link to the sensor's datasheet.
 The `properties` list contains all of the _observed_properties_
-that the sensor reports on, written as <feature_of_interest>.<observed_property>.
+that the sensor reports on, written as <feature>.<observed_property>.
 It is not enough to specify just the feature,
 because some sensors may report on only a subset of a feature's properties.
 
