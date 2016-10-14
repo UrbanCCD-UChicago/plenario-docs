@@ -27,7 +27,7 @@ Plenario lets you fetch data from sensor networks in different ways, depending o
 
 If you're developing an application to let people explore data
 (like [OpenGrid](https://chicago.opengrid.io/opengrid/)
-or Plenario's [demonstration application](http://plenar.io/sensors))
+or Plenario's [demonstration application](http://ember-dev.s3-website-us-east-1.amazonaws.com/sensors))
 the [query and aggregate endpoints](#http-data-queries)
 are designed to respond quickly, making them a good fit for web applications.
 
