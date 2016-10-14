@@ -50,7 +50,6 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperatur
 
 ```
 http://plenar.io/v1/api/sensor-networks/array_of_things/query?geom={"type":"Polygon","coordinates":[[[40.0, -90.0],[45.0,-90.0],[45.0, -85.0],[40.0, -85.0]]]}&start_datetime=2016-12-1T00:00:00.000&end_datetime=2017-1-1T00:00:00.000
-
 ```
 
 ```json
@@ -83,6 +82,42 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?geom={"type":"Poly
 }
 ```
 
+> All below freezing temperature readings from array_of_things network in the last 90 days
+
+```
+http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature
+&filter={"prop": "temperature.temperature", "val": "0", "op": "le"}
+```
+
+```json
+{
+  "meta": {
+    "query": {
+      "start_datetime": "2016-12-1T00:00:00.000",
+      "limit": 1000,
+      "end_datetime": "2017-1-1T00:00:00.000",
+      "offset": 0,
+      "network": "array_of_things"
+    },
+    "message": [],
+    "total": 1000
+  },
+  "data": [
+    {
+      "feature": "temperature",
+      "node": "029",
+      "sensor": "TMP112",
+      "meta_id": 11,
+      "results": {
+        "temperature": -4.01
+      },
+      "datetime": "2016-12-25T00:54:18"
+    },
+    ...
+  ]
+}
+```
+
 ### Common Query Syntax
 
 |**Parameter Name**                                    | **Required?** | **Default**            |
@@ -93,6 +128,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?geom={"type":"Poly
 | [**geom**](#space-filtering)                         | no            | none                   |
 | [**start_datetime**](#sensor-network-time-filtering) | no            | 90 days ago            |
 | [**end_datetime**](#sensor-network-time-filtering)   | no            | now                    |
+/ [**filter**](#attribute-filtering)                   | no            | none                   |
 
 ### Responses
 
