@@ -124,7 +124,7 @@ You can use the following binary operators:
 {"op":"ilike", "col":"complaint_detail", "val":"%asbestos%"}
 ```
 
-Simple conditions that only apply one operator can be expressed in the following syntax: `{"op":"<operator>", "col":"<column_name>", "val":"<target_value>"}`
+A single conditions that applies to one feature can be expressed in the following syntax: `{"op":"<operator>", "prop":"<property>", "val":"<target_value>"}`
 
 > Filter Chicago crimes dataset to only include narcotics crimes that took place on a street or sidewalk
 
