@@ -1,6 +1,6 @@
 ## Streaming Data Queries
 
-> `data` event format
+> **Data Event Format**
 
 ```json
 {

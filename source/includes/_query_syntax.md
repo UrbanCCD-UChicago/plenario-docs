@@ -58,6 +58,12 @@ It might take too long for Plenario to process a massive request in a synchronou
 If you notice that a call is timing out,
 try running it as an asynchronous job instead.
 
+<aside class="warning">
+    Job functionality, enabled by <code>jobs=true</code>, is undergoing 
+    maintenance and currently disabled.
+</aside>
+
+
 ## -- Attribute Operators
 
 > Use the "columns" information from each dataset's metadata
