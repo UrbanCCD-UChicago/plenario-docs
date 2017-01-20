@@ -103,10 +103,9 @@ public class Main {
 
 ### Common Query Syntax
 
-|**Parameter Name**  | **Required?** | **Default**
-|--------------- | -----------------| ---
-
-| [**sensor_network**](#sensor-networks) | yes | none
-| [**nodes**](#nodes) | no | all nodes in network
-| [**sensors**](#sensors) | no | all sensors in network
-| [**features**](#features-of-interest) | no | all features reported on by network
+|**Parameter Name**                      | **Required?** | **Default**                         |
+| -------------------------------------- | ------------- | ----------------------------------- |
+| [**sensor_network**](#sensor-networks) | yes           | none                                |
+| [**nodes**](#nodes)                    | no            | all nodes in network                |
+| [**sensors**](#sensors)                | no            | all sensors in network              |
+| [**features**](#features-of-interest)  | no            | all features reported on by network |
