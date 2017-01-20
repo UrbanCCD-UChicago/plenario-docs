@@ -121,10 +121,8 @@ Plenario will return each record as a GeoJSON point with the parsed latitude and
 `GET /v1/api/datadump`
 
 Because the raw data endpoint `/detail` is designed to respond quickly,
-it is limited to 1000 observations.
-If you want to download all records of an event dataset that meet the filter you have provided, you can request a bulk export with `/datadump`.
-
-`/datadump` returns a ticket that you can use to check on your request's progress at `/v1/api/jobs/{ticket}`.
-When the export is complete, `/v1/api/jobs/{ticket}` will give you a link where you can download the file.
+it is limited to 1000 observations. If you want to download all records 
+of an event dataset that meet the filter you have provided, you can 
+request a bulk export with `/datadump`.
 
 `/datadump` takes the same query parameters as `/detail`.

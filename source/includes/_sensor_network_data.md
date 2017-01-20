@@ -87,10 +87,10 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperatur
 }
 ```
 
-> All below freezing temperature readings from array_of_things network in the last 90 days
+> All below freezing temperature readings from array_of_things network in the last 1 day
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature&filter={"prop": "temperature.temperature", "val": "0", "op": "le"}
+http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature&filter={"prop": "temperature", "val": "0", "op": "le"}
 ```
 
 ```json
@@ -134,10 +134,39 @@ Response limit is 1000 by default, but can be set to a maximum of 10000.
 | [**nodes**](#nodes)                                  | no            | all nodes in network   |
 | [**sensors**](#sensors)                              | no            | all sensors in network |
 | [**geom**](#space-filtering)                         | no            | none                   |
-| [**start_datetime**](#sensor-network-time-filtering) | no            | 90 days ago            |
+| [**start_datetime**](#sensor-network-time-filtering) | no            | 1 day ago              |
 | [**end_datetime**](#sensor-network-time-filtering)   | no            | now                    |
 | [**filter**](#attribute-filtering)                   | no            | none                   |
 | [**limit**](#nodes)                                  | no            | 1000                   |
+
+### Filter parameter
+
+A single condition that applies to one property can be expressed in the following syntax: `{"op":"<operator>", "prop":"<property>", "val":"<target_value>"}`, where `<property>` must be a property of the feature specified by
+the `feature` parameter.
+
+You can use the following binary operators:
+
+> LIKE examples:
+>
+> "%rat%" matches "rat poisoning" and "crater".
+> "jo_" matches "joe" and "job" but not "josephine"
+
+|operator|description|
+|---|---|
+|`eq`|equal to (==)|
+|`gt`|greater than (>)|
+|`ge`|greater than or equal to (>=)|
+|`lt`|less than (<)|
+|`le`|less than or equal to (<=)|
+|`ne`|not equal (!=)|
+|`in`|within a list of provided values like `0560,0110`|
+|`like`|Match string pattern|
+|`ilike`|Match string pattern, case insensitive|
+
+
+<aside class="notice">
+    <code>like</code> and <code>ilike</code> match patterns using the SQL LIKE operator. That lets you use <code>%</code> and <code>_</code> as wildcard characters. <code>%</code> matches a string of any length, while <code>_</code> matches exactly one character.
+</aside>
 
 ### Responses
 
