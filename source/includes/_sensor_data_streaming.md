@@ -4,108 +4,86 @@
 
 ```json
 {
-  "node": "00A",
-  "meta_id": 11,
-  "datetime": "2016-08-05T00:00:08.246000",
-  "sensor": "hti21D",
-  "feature": "temperature",
-  "results": {     
-      "temperature": 37.90
-  }
+    "datetime": "2017-03-03T22:38:27", 
+    "feature": "temperature", 
+    "meta_id": 0.0, 
+    "node": "0000001e0610ba72", 
+    "results": {
+        "internal_temperature": null, 
+        "temperature": 23.15
+    }, 
+    "sensor": "tmp112"
 }
 ```
 
-Plenario uses the [socket.io protocol](https://github.com/socketio/socket.io-protocol) to provide near real-time streaming of sensor data.
-A user may open a socket and specify nodes, features of interest, and sensors they're interested in.
-Plenario will push observations that satisfies their filters to their socket.
-If no parameters are specified, the default is to stream all data from the array_of_things network.
+Plenario uses the [pusher](https://github.com/socketio/socket.io-protocol) 
+service to provide near real-time streaming of sensor data. A user may open 
+sockets which specify the node they're interested in. Plenario will push 
+observations that correspond their socket. If no parameters are specified, 
+the default is to stream all data from the array_of_things_chicago network.
 
-Any invalid parameters and other errors will be emitted as JSON `internal_error` events and no connection will be created. If all parameters are valid and no errors occur, the client will begin receiving `data` events from the socket.
+Any invalid parameters and other errors cause the connection attempt to be
+rejected. If all parameters are valid and no errors occur, the client will 
+begin receiving `data` events from the socket.
 
-> Start a socket client that will print any `internal_error` and all temperature `data` events from the HTU21D sensor on nodes 00A and 00B
+### Required Variables
 
-> **Sample Node.js client** using the [socket.io-client](http://socket.io/docs/) module
+| **Variable**      | **Value**                                                          |
+| ----------------- | ------------------------------------------------------------------ |
+| **PLENARIO_KEY**  | c6851f0950381b69a136                                               |
+| **PLENARIO_AUTH** | https://gm76b1jzz1.execute-api.us-east-1.amazonaws.com/development |
+
+
+> **Node.js** ([pusher-client](https://www.npmjs.com/package/pusher-client))
+
+> Subscribe to all nodes in the array_of_things_chicago network
 
 ```javascript
-var socket = require('socket.io-client')('ws://streaming.plenar.io?' +
-    'sensor_network=array_of_things&' +
-    'features=temperature&' +
-    'nodes=00A,00B&' +
-    'sensors=HTU21D');
+var Pusher = require('pusher-client');
 
-socket.on('data', function (data) {
-    console.log(data);
+var pusher = new Pusher(PLENARIO_KEY, { 
+    authEndpoint: PLENARIO_AUTH 
 });
-socket.on('internal_error', function (err) {
-    console.log(err);
+
+var channel = pusher.subscribe('private-all');
+
+channel.bind('data', function(e) {
+    console.log(e);
 });
 ```
 
-> **Sample Python client** using the [socketIO-client](https://pypi.python.org/pypi/socketIO-client) package
+**PLENARIO_AUTH** 
 
-```python
-import json
-from socketIO_client import SocketIO
+Given that pusher allows channels to be generated on the fly for subscribers,
+we need a way to check the validity of a channel during attempted subscription.
+That is what the `PLENARIO_AUTH` endpoint is for, it allows us to intercept and
+approve subscriptions.
 
-socketIO = SocketIO("streaming.plenar.io", params={
-    'sensor_network': 'array_of_things',
-    'features': 'temperature',
-    'sensors': ['HTU21D'],
-    'nodes': ['00A', '00B']})
+**"private-" prefix**
 
-def on_data(data):
-    print json.dumps(data)
+This is another aspect of how pusher works, the authentication request is only
+made for channels which start with the prefix "private-". Because of this
+behaviour **we do not publish on any channels not prefixed with "private-"**.
 
-def on_error(err):
-    print json.dumps(err)
 
-socketIO.on('data', on_data)
-socketIO.on('internal_error', on_error)
-socketIO.wait()
+> Subscribe to node 0000001e0610b9e7 in the array_of_things_chicago network
+
+```javascript
+var Pusher = require('pusher-client');
+
+var pusher = new Pusher(PLENARIO_KEY, { 
+    authEndpoint: PLENARIO_AUTH 
+});
+
+var channel = pusher.subscribe('private-0000001e0610b9e7');
+
+channel.bind('data', function(e) {
+    console.log(e);
+});
 ```
 
-> **Sample Java client** using the [socket.io-client-java](https://github.com/socketio/socket.io-client-java) package
+**Don't see your favorite language?**
 
-```java
-import io.socket.client.*;
-import io.socket.emitter.*;
-import org.json.JSONObject;
-
-public class Main {
-
-    public static void main(String[] args) throws Exception {
-
-        final Socket socket = IO.socket("http://streaming.plenar.io?sensor_network=array_of_things");
-        socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
-
-            @Override
-            public void call(Object... args) {}
-
-        }).on("data", new Emitter.Listener() {
-
-            @Override
-            public void call(Object... args) {
-                JSONObject observation = (JSONObject)args[0];
-                System.out.println(observation);
-            }
-
-        }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
-
-            @Override
-            public void call(Object... args) {}
-
-        });
-        socket.connect();
-    }
-}
-
-```
-
-### Common Query Syntax
-
-|**Parameter Name**                      | **Required?** | **Default**                         |
-| -------------------------------------- | ------------- | ----------------------------------- |
-| [**sensor_network**](#sensor-networks) | yes           | none                                |
-| [**nodes**](#nodes)                    | no            | all nodes in network                |
-| [**sensors**](#sensors)                | no            | all sensors in network              |
-| [**features**](#features-of-interest)  | no            | all features reported on by network |
+Pusher has support for a whole lot more than the examples we've listed. Take
+a look [here](https://pusher.com/docs/libraries) - don't forget that the
+channels are private!
