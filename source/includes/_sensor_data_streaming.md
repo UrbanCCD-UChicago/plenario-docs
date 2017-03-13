@@ -64,6 +64,50 @@ provided above for the `PLENARIO_KEY` and `PLENARIO_AUTH` variables.
     available <a href="https://pusher.com/docs/libraries">here</a>.
 </aside>
 
+## -- Connecting to a socket (without a pusher client library)
+
+> **Python 3.5** ([websockets](https://github.com/aaugustin/websockets))
+
+```python
+import asyncio
+import json
+import requests
+import websockets
+
+pusher_uri = "ws://ws.pusherapp.com:80/app/{}?client=MyClient&version=4.0&protocol=6".format(PLENARIO_KEY)
+
+async def listen():
+
+    async with websockets.connect(pusher_uri) as websocket:
+
+        # Get your socket id from pusher
+        pusher_response = json.loads(await websocket.recv())
+        socket_id = json.loads(pusher_response["data"])["socket_id"]
+
+        # Get an authorization key from plenario
+        channel_name = "private-array_of_things_chicago;;;temperature"
+        response = requests.post(PLENARIO_AUTH, data="socket_id={}&channel_name={}".format(socket_id, channel_name))
+        auth = response.json()["auth"]
+
+        # Subscribe to your desired channel
+        await websocket.send(
+            json.dumps({
+                "event": "pusher:subscribe", 
+                "data": {
+                    "channel": channel_name, 
+                    "auth": auth
+                }
+            })
+        )
+        
+        while True:
+            print(await websocket.recv())
+
+asyncio.get_event_loop().run_until_complete(listen())
+```
+
+Subscribing to pusher can also be done with any websocket client. 
+
 ## -- Filtering socket observations
 
 > Allow all observations in the array_of_things_chicago network
