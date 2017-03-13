@@ -33,14 +33,14 @@ all sensor networks will be returned.
 > Network metadata for the array_of_things sensor network
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago
 ```
 
 ```json
 {
   "meta": {
     "query": {
-      "network": "array_of_things"
+      "network": "array_of_things_chicago"
     },
     "message": [ ],
     "total": 1
@@ -58,7 +58,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things
       "features": [
         "temperature"
       ],
-      "name": "array_of_things"
+      "name": "array_of_things_chicago"
     }
   ]
 }
@@ -91,14 +91,14 @@ with non-spatial metadata stored in the each node's `properties` object.
 > Node metadata for node 011 in the array_of_things network
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/011
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/nodes/011
 ```
 
 ```json
 {
     "meta": {
         "query": {
-            "network": "array_of_things"
+            "network": "array_of_things_chicago"
         },
         "message": [],
         "total": 1
@@ -118,7 +118,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/011
                 "sensors": [
                     "tmp112"
                 ],
-                "network": "array_of_things",
+                "network": "array_of_things_chicago",
                 "id": "011"
             }
         },
@@ -129,7 +129,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/011
 > Node metadata for all nodes in the array_of_things network within the given geometry
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/?geom={"type":"Polygon","coordinates”:[[[40.0, -90.0],[45.0, -90.0],[45.0, -85.0],[40.0, -85.0]]]}
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/nodes/?geom={"type":"Polygon","coordinates”:[[[40.0, -90.0],[45.0, -90.0],[45.0, -85.0],[40.0, -85.0]]]}
 ```
 
 ```json
@@ -137,7 +137,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/?geom={"type":"Pol
   "meta": {
     "query": {
       "geom": {"type": "Polygon", "coordinates": [[[40.0, -90.0], [45.0, -90.0], [45.0, -85.0], [40.0, -85.0]]]},
-      "network": "array_of_things"
+      "network": "array_of_things_chicago"
     },
     "message": [ ],
     "total": 5
@@ -159,7 +159,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/nodes/?geom={"type":"Pol
           "sensor_dev_4"
         ],
         "id": "node_dev_1",
-        "network": "array_of_things"
+        "network": "array_of_things_chicago"
           }
     }
   ]
@@ -183,9 +183,9 @@ or all nodes in a network within some geometry .
 
 ### Common Query Syntax
 
-|**Parameter Name**  | **Required?** | **Default**
-|--------------- | -----------------| ---
-| [**geom**](#space-filtering) | no | none
+|**Parameter Name**            | **Required?** | **Default** |
+|----------------------------- | ------------- | ----------- |
+| [**geom**](#space-filtering) | no            | none        |
 
 ### Responses
 
@@ -209,7 +209,7 @@ all features of interest within the network
 > Feature of interest metadata for magnetic_field
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/features/magnetic_field
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/features/magnetic_field
 ```
 
 ```json
@@ -307,7 +307,7 @@ Retrieve metadata about sensors.
 If no sensor is specified, returns all sensors from the specified network.
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/sensors/TMP112
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/sensors/TMP112
 ```
 
 ```json
@@ -354,3 +354,105 @@ because some sensors may report on only a subset of a feature's properties.
 | **name**           | Name of sensor model.                                                         |
 | **info**           | JSON containing any information provided by the network maintainer.           |
 | **properties**     | Array of properties measured by the sensor in the format `feature`.`property` |
+
+## -- Map
+
+> Map the array_of_things_chicago network
+
+```
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/map
+```
+```json
+{
+  "0000001e0610b9e7": {
+    "apds-9006-020": {
+      "light_intensity.500nm": "intensity"
+    }, 
+    "bmi160": {
+      "acceleration.x": "accel_x", 
+      "acceleration.y": "accel_y", 
+      "acceleration.z": "accel_z", 
+      "orientation.x": "orient_x", 
+      "orientation.y": "orient_y", 
+      "orientation.z": "orient_z"
+    }
+  },
+  "0000001e0610ba72": {
+    "apds-9006-020": {
+      "light_intensity.500nm": "intensity"
+    }, 
+    "bmi160": {
+      "acceleration.x": "accel_x", 
+      "acceleration.y": "accel_y", 
+      "acceleration.z": "accel_z", 
+      "orientation.x": "orient_x", 
+      "orientation.y": "orient_y", 
+      "orientation.z": "orient_z"
+    }
+  }
+}
+```
+
+`GET /v1/api/sensor-networks/<network>/map`
+
+Represents the specified network as a tree. This can be helpful when it is
+necessary to programmatically explore the contents of a network or to see
+the relationships of its subcomponents.
+
+
+## -- Validation
+
+> Valid parameters
+
+```
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/check?
+node=0000001e0610b9e7&sensor=bmp180&feature=atmospheric_pressure
+```
+```json
+{
+  "message": "Your query params are good to go."
+}
+```
+
+> Invalid parameters
+
+```
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/check?
+node=0000&sensor=bmp181&feature=atmospherik_pressure
+```
+```json
+{
+  "error": {
+    "feature": [
+      "atmospherik_pressure does not exist"
+     ],
+    "node": [
+      "0000 does not exist"
+    ],
+    "sensor": [
+      "bmp181 does not exist"
+    ]
+  },
+  "meta": {
+    "query": {
+      "node": "0000",
+      "feature": "atmospherik_pressure",
+      "sensor": "bmp181"
+    }
+  }
+}
+```
+
+`GET /v1/api/sensor-networks/<network>/check`
+
+While all API endpoints will inform you if your query parameters
+are invalid - it can be helpful to check any combination of parameters
+for a given network.
+
+### Common Query Syntax
+
+| **Paramater Name** | **Required?** | **Description** |
+| ------------------ | ------------- | --------------- |
+| **node(s)**        | no            | Node ids        |
+| **sensor(s)**      | no            | Sensor names    |
+| **feature(s)**     | no            | Feature names   |

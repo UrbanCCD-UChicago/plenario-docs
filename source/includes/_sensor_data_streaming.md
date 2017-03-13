@@ -1,6 +1,6 @@
 ## Streaming Data Queries
 
-> **Data Event Format**
+> **Data Event**
 
 ```json
 {
@@ -18,21 +18,19 @@
 
 Plenario uses the [pusher](https://github.com/socketio/socket.io-protocol) 
 service to provide near real-time streaming of sensor data. A user may open 
-sockets which specify the node they're interested in. Plenario will push 
-observations that correspond their socket. If no parameters are specified, 
-the default is to stream all data from the array_of_things_chicago network.
+sockets which specify the observations they're interested in. Plenario will 
+push  observations that correspond their socket. 
 
 Any invalid parameters and other errors cause the connection attempt to be
-rejected. If all parameters are valid and no errors occur, the client will 
-begin receiving `data` events from the socket.
+rejected with a `403`. If all parameters are valid and no errors occur, the 
+client will begin receiving `data` events from the socket.
 
-### Required Variables
+<aside class="info">
+    If you're unsure of whether or not your parameters are allowed, try 
+    validating them with the <a href="/#validation">check</a> endpoint first.
+</aside>
 
-| **Variable**      | **Value**                                                          |
-| ----------------- | ------------------------------------------------------------------ |
-| **PLENARIO_KEY**  | c6851f0950381b69a136                                               |
-| **PLENARIO_AUTH** | https://gm76b1jzz1.execute-api.us-east-1.amazonaws.com/development |
-
+## -- Connecting to a socket
 
 > **Node.js** ([pusher-client](https://www.npmjs.com/package/pusher-client))
 
@@ -45,45 +43,77 @@ var pusher = new Pusher(PLENARIO_KEY, {
     authEndpoint: PLENARIO_AUTH 
 });
 
-var channel = pusher.subscribe('private-all');
+var channel = pusher.subscribe('private-array_of_things_chicago');
 
 channel.bind('data', function(e) {
     console.log(e);
 });
 ```
 
-**PLENARIO_AUTH** 
+| **Variable**      | **Value**                                                          |
+| ----------------- | ------------------------------------------------------------------ |
+| **PLENARIO_KEY**  | c6851f0950381b69a136                                               |
+| **PLENARIO_AUTH** | https://gm76b1jzz1.execute-api.us-east-1.amazonaws.com/development |
 
-Given that pusher allows channels to be generated on the fly for subscribers,
-we need a way to check the validity of a channel during attempted subscription.
-That is what the `PLENARIO_AUTH` endpoint is for, it allows us to intercept and
-approve subscriptions.
+To get started with streaming, install the client library for your
+respective language and copy over the client code. Plug in the values
+provided above for the `PLENARIO_KEY` and `PLENARIO_AUTH` variables.
 
-**"private-" prefix**
+<aside class="info">
+    Don't see your favorite language? There are alot more client libraries
+    available <a href="https://pusher.com/docs/libraries">here</a>.
+</aside>
 
-This is another aspect of how pusher works, the authentication request is only
-made for channels which start with the prefix "private-". Because of this
-behaviour **we do not publish on any channels not prefixed with "private-"**.
+## -- Filtering socket observations
 
+> Allow all observations in the array_of_things_chicago network
 
-> Subscribe to node 0000001e0610b9e7 in the array_of_things_chicago network
-
-```javascript
-var Pusher = require('pusher-client');
-
-var pusher = new Pusher(PLENARIO_KEY, { 
-    authEndpoint: PLENARIO_AUTH 
-});
-
-var channel = pusher.subscribe('private-0000001e0610b9e7');
-
-channel.bind('data', function(e) {
-    console.log(e);
-});
+```
+private-array_of_things_chicago
 ```
 
-**Don't see your favorite language?**
+> Allow node 0000001e0610ba72 observations in the array_of_things_chicago_network
 
-Pusher has support for a whole lot more than the examples we've listed. Take
-a look [here](https://pusher.com/docs/libraries) - don't forget that the
-channels are private!
+```
+private-array_of_things_chicago;0000001e0610ba72
+```
+
+> Allow tmp112 sensor observations on node 0000001e0610b9e7 in the array_of_things_chicago_network
+
+```
+private-array_of_things_chicago;0000001e0610b9e7;tmp112
+```
+
+> Allow atmospheric pressure observations from the bmp180 sensor in the array_of_things_chicago_network
+
+```
+private-array_of_things_chicago;0000001e0610b9e7;bmp180;atmospheric_pressure
+```
+
+> Allow temperature observations from ANY sensor on the 0000001e0610b9e7 node
+in the array_of_things_chicago_network (NOTE the ';;')
+
+```
+private-array_of_things_chicago;0000001e0610b9e7;;temperature
+```
+
+> Allow temperature observations from ANY sensor on ANY node
+in the array_of_things_chicago_network (NOTE the ';;'s)
+
+```
+private-array_of_things_chicago;;;temperature
+```
+
+> Allow ANY observation from the bmp180 sensor on ANY node
+in the array_of_things_chicago_network (NOTE the ';;')
+
+```
+private-array_of_things_chicago;;bmp180
+```
+
+Observations are filtered by the name of your channel. You can filter
+on any combination of sensor network aspects. The channel name format
+is as follows: `private-<NETWORK>;<NODE>;<SENSOR>;<FEATURE>` where network 
+is mandatory. If the channel name is improperly formatted or contains
+values which do not exist - a `403` will be returned and you will not
+be subscribed.

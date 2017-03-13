@@ -12,7 +12,7 @@ or generate aggregates over a node's history.
 Get observations.
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature&sensors=HTU21D&nodes=000,011
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/query?feature=temperature&sensors=HTU21D&nodes=000,011
 ```
 
 ```json
@@ -51,10 +51,10 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperatur
   ]
 }
 ```
-> Temperature observations from the array_of_things network in December 2016 within the given geometry
+> Temperature observations from the array_of_things_chicago network in December 2016 within the given geometry
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature&geom={"type":"Polygon","coordinates":[[[40.0, -90.0],[45.0,-90.0],[45.0, -85.0],[40.0, -85.0]]]}&start_datetime=2016-12-1T00:00:00.000&end_datetime=2017-1-1T00:00:00.000
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/query?feature=temperature&geom={"type":"Polygon","coordinates":[[[40.0, -90.0],[45.0,-90.0],[45.0, -85.0],[40.0, -85.0]]]}&start_datetime=2016-12-1T00:00:00.000&end_datetime=2017-1-1T00:00:00.000
 ```
 
 ```json
@@ -87,10 +87,10 @@ http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperatur
 }
 ```
 
-> All below freezing temperature readings from array_of_things network in the last 1 day
+> All below freezing temperature readings from array_of_things_chicago network in the last 1 day
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things/query?feature=temperature&filter={"prop": "temperature", "val": "0", "op": "le"}
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/query?feature=temperature&filter={"prop": "temperature", "val": "0", "op": "le"}
 ```
 
 ```json
@@ -258,15 +258,15 @@ a specified window of time.
 
 ### Endpoint-Specific Parameters
 
-| **Parameter Name**       | **Required?** | **Parameter Default** | **Parameter Description**                       |
-| ------------------------ | ------------- | --------------------- | ----------------------------------------------- |
-| **node**                 | Yes           | None                  | Target node                                     |
+| **Parameter Name**       | **Required?** | **Parameter Default** | **Parameter Description**                                        |
+| ------------------------ | ------------- | --------------------- | ---------------------------------------------------------------- |
+| **node**                 | Yes           | None                  | Target node                                                      |
 | **function**             | Yes           | None                  | Aggregate function to apply: see table below                     |
-| **feature**              | Yes           | None                  | Node feature to aggregate                       |
-| **sensors**              | No            | All sensors           | Narrows features to only those on these sensors |
-| **start_datetime**       | No            | Yesterday's datetime  | Beginning of observation window                 |
-| **end_datetime**         | No            | Current datetime      | End of observation window                       |
-| **agg**                  | No            | hour    | Size of time slices: one of minute, hour, day, week, month, year                      |
+| **feature**              | Yes           | None                  | Node feature to aggregate                                        |
+| **sensors**              | No            | All sensors           | Narrows features to only those on these sensors                  |
+| **start_datetime**       | No            | Yesterday's datetime  | Beginning of observation window                                  |
+| **end_datetime**         | No            | Current datetime      | End of observation window                                        |
+| **agg**                  | No            | hour                  | Size of time slices: one of minute, hour, day, week, month, year |
 
 ### Responses
 
@@ -285,7 +285,7 @@ a specified window of time.
 | ------- | ------------------ |
 | **avg** | average	           |
 | **std** | standard deviation |
-| **var** | variance	       |
+| **var** | variance	         |
 | **min** | minimum	           |
 | **max** | maximum	           |
 | **med** | median	           |
