@@ -1,22 +1,25 @@
 # Providers
 
 This section is specifically for those who are providers of sensor network
-data to Plenario. It assumes that you have received an administrative account on [apiary](LINK).
+data to Plenario. It assumes that you have received an administrative
+account on [apiary](LINK).
 
 
 ## About
 
-We ensure Plenario does not ingest junk data by filtering out incoming
-stream data. This filtering is based on metadata descriptions of sensor
-networks. Plenario utilizes this metadata in order to store and query
-sensor observations in a meaningful way.
+We ensure Plenario does not ingest junk data by filtering the incoming
+stream. This filtering is based on metadata descriptions of sensor
+networks which Plenario utilizes to store and query observations in a
+meaningful way.
 
-If you would rather use the browsable api, it's still recommended to skim
-this section just to see an example of what valid data looks like, as well
-as how all the pieces fit together.
+If you would rather use the [browsable api](LINK), it's still recommended
+to skim this section just to see an example of what valid data looks
+like, as well as how all the pieces fit together.
 
 
 ## Adding a network
+
+**`POST /api/networks/?format=vnd.api%2Bjson`**
 
 ```bash
 curl "http://localhost:8000/api/networks/?format=vnd.api%2Bjson" \
@@ -24,68 +27,90 @@ curl "http://localhost:8000/api/networks/?format=vnd.api%2Bjson" \
   --data "name=mysensornetwork&info={}"
 ```
 
-Plenario first needs to know what network a sensor will belong to. This is
-the highest level of organization that describes a collection of nodes. If
-you intend to add nodes to an existing network, you can skip this section.
+Plenario first needs to know what [network](#sensor-networks) a node will
+belong to. If you intend to add nodes to an existing network, you can
+skip this section.
 
-Networks let us namespace all of the nodes you intend to register.
-The info field is simply miscellaneous metadata about the network
-that you can add, but is optional.
+| **Parameter** | **Description**                                              |
+| ------------- | ------------------------------------------------------------ |
+| name          | Unique name for a network                                    |
+| info          | Miscellaneous metadata about the network in the form of JSON |
 
 
 ## Adding a feature
 
+**`POST /api/features/?format=vnd.api%2Bjson`**
+
 ```bash
 curl "http://localhost:8000/api/features/?format=vnd.api%2Bjson" \
   --user username:password \
-  --data 'name=motion&observed_properties=[
+  --data 'name=sound&observed_properties=[
       {"name": "intensity", "type": "double precision"},
       {"name": "duration", "type": "double precision"}
     ]'
 ```
 
-If any of your sensors are reporting something we do not have a feature
-for, you can add it like this
+If any of your node's sensors are reporting something we do not have a
+[feature](#features-of-interest) for, you can add it like this. Here we've
+created a hypothetical feature for sensors which report on 'sound' as
+'intensity' and 'duration'.
 
-Here we've created a hypothetical feature for sensors which report on
-'sound' as 'intensity' and 'duration'.
+| **Parameter**       | **Description**                                              |
+| ------------------- | ------------------------------------------------------------ |
+| name                | Unique name for a feature                                    |
+| observed_properties | List of json objects containing the 'name' and 'type' keys   |
 
-VALID TYPES
+Values for the type key must be an accepted [Redshift data type](http://docs.aws.amazon.com/redshift/latest/dg/c_Supported_data_types.html).
 
 
 ## Adding a sensor
 
+**`POST /api/sensors/?format=vnd.api%2Bjson`**
+
 ```bash
 curl "http://localhost:8000/api/sensors/?format=vnd.api%2Bjson" \
   --user username:password \
-  --data 'name=mot3000&observed_properties={
-      "dur": "motion.duration",
-      "val": "motion.intensity"
+  --data 'name=snd3000&observed_properties={
+      "dur": "sound.duration",
+      "val": "sound.intensity"
     }&info={}'
 ```
 
-Here we've added a motion sensor that reports values as 'dur' and 'val'.
-Given that we have a motion feature that we created earlier, we go ahead
-and map these values to that feature. Now this sensor's motion values can
-be queried alongside any other sensor that also reports motion values.
+This adds a sound [sensor](#sensors) that reports values as 'dur' and 'val'.
+Given that we have a sound feature that we created earlier, we go ahead
+and map these values to that feature. Now this sensor's sound values can
+be queried alongside any other sensor that also reports sound values.
+
+| **Parameter**       | **Description**                                       |
+| ------------------- | ----------------------------------------------------- |
+| name                | Unique name for a feature                             |
+| observed_properties | Map of reported sensor values to feature properties   |
 
 
 ## Adding a node
 
-Finally we can register nodes. Nodes are either a single sensor, or a
-collection of sensors at some physical location.
+**`POST /api/nodes/?format=vnd.api%2Bjson`**
 
 ```bash
 curl "http://localhost:8000/api/nodes/?format=vnd.api%2Bjson" \
   --user username:password \
   --data "id=mynode2&sensor_network=plenario_development&info={}\
-    &sensors=tmp112&sensors=tmp421&location={\
+    &sensors=snd3000&sensors=tmp112&location={\
       \"type\": \"Point\",\
       \"coordinates\": [-104.7858045, 39.8087029]\
     }"
 ```
 
-The location argument is represented by geojson, WKT EWKT, or HEXEWKB
+Finally we can register [nodes](#nodes). Here we've created a node that has both
+a sound and a temperature sensor.
+
+| **Parameter**  | **Description**                                       |
+| -------------- | ----------------------------------------------------- |
+| id             | Unique name for a feature                             |
+| sensor_network | Name of the network this node belongs to              |
+| info           | Miscellaneous information about the node              |
+| sensors        | Name of a sensor contained by this node               |
+| location       | Physical location of the node as GeoJSON or WKT       |
 
 
 ## Reporting an observation
@@ -95,7 +120,7 @@ The location argument is represented by geojson, WKT EWKT, or HEXEWKB
   "network": "mysensornetwork",
   "meta_id": "version_id",
   "node_id": "mynodeid",
-  "sensor": "mysensor",
+  "sensor": "snd3000",
   "datetime": "2017-01-01T00:00:00",
   "data": {
     "dur": 3.0,
@@ -124,7 +149,8 @@ kinesis_client.put_record(**{
 ```
 
 With all this metadata in place, Plenario can begin to ingest data that
-you send to its observation stream. Observations can be pushed
-using any of Amazon's Kinesis client libraries. They must be formatted as
-json, with the sensor observation values matching the observation property
+you send to its observation stream. Observations are pushed
+using any of Amazon's Kinesis client libraries. An observation represents
+a single report made by a sensor. They must be formatted as
+json, with the observation values matching the observation property
 map defined for that sensor.
