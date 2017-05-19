@@ -115,6 +115,8 @@ a sound and a temperature sensor.
 
 ## Reporting an observation
 
+> **Payload Format**
+
 ```json
 {
   "network": "mysensornetwork",

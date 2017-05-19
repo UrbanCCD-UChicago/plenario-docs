@@ -129,7 +129,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/nodes/011
 > Node metadata for all nodes in the array_of_things network within the given geometry
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/nodes/?geom={"type":"Polygon","coordinates”:[[[40.0, -90.0],[45.0, -90.0],[45.0, -85.0],[40.0, -85.0]]]}
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/nodes/?geom={%20%22type%22:%20%22FeatureCollection%22,%20%22features%22:%20[%20{%20%22type%22:%20%22Feature%22,%20%22properties%22:%20{},%20%22geometry%22:%20{%20%22type%22:%20%22Polygon%22,%20%22coordinates%22:%20[%20[%20[%20-87.8411865234375,%2041.73852846935917%20],%20[%20-87.5775146484375,%2041.73852846935917%20],%20[%20-87.5775146484375,%2041.97991089691236%20],%20[%20-87.8411865234375,%2041.97991089691236%20],%20[%20-87.8411865234375,%2041.73852846935917%20]%20]%20]%20}%20}%20]%20}
 ```
 
 ```json
@@ -367,26 +367,26 @@ http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/map
   "0000001e0610b9e7": {
     "apds-9006-020": {
       "light_intensity.500nm": "intensity"
-    }, 
+    },
     "bmi160": {
-      "acceleration.x": "accel_x", 
-      "acceleration.y": "accel_y", 
-      "acceleration.z": "accel_z", 
-      "orientation.x": "orient_x", 
-      "orientation.y": "orient_y", 
+      "acceleration.x": "accel_x",
+      "acceleration.y": "accel_y",
+      "acceleration.z": "accel_z",
+      "orientation.x": "orient_x",
+      "orientation.y": "orient_y",
       "orientation.z": "orient_z"
     }
   },
   "0000001e0610ba72": {
     "apds-9006-020": {
       "light_intensity.500nm": "intensity"
-    }, 
+    },
     "bmi160": {
-      "acceleration.x": "accel_x", 
-      "acceleration.y": "accel_y", 
-      "acceleration.z": "accel_z", 
-      "orientation.x": "orient_x", 
-      "orientation.y": "orient_y", 
+      "acceleration.x": "accel_x",
+      "acceleration.y": "accel_y",
+      "acceleration.z": "accel_z",
+      "orientation.x": "orient_x",
+      "orientation.y": "orient_y",
       "orientation.z": "orient_z"
     }
   }
