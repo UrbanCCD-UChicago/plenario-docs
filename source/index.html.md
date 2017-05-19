@@ -27,6 +27,7 @@ includes:
   - sensor_bulk_export
   - sensor_data_streaming
   - weather
+  - providers
 
 search: true
 ---
