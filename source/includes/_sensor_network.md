@@ -24,11 +24,6 @@
 }
 ```
 
-_Looking for [Array of Things](http://arrayofthings.us/) data?
-It isn't published just yet, and the endpoints in this section aren't live.
-But we're publishing the API for sensor network access
-ahead of time so you can start designing applications around it._
-
 Plenario lets you fetch data from sensor networks in different ways, depending on the needs of your application.
 
 If you're developing an application to let people explore data

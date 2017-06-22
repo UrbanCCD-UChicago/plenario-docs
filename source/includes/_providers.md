@@ -2,7 +2,7 @@
 
 This section is specifically for those who are providers of sensor network
 data to Plenario. It assumes that you have received an administrative
-account on [apiary](LINK).
+account on [apiary](http://apiary.plenar.io).
 
 
 ## About
@@ -12,9 +12,9 @@ stream. This filtering is based on metadata descriptions of sensor
 networks which Plenario utilizes to store and query observations in a
 meaningful way.
 
-If you would rather use the [browsable api](LINK), it's still recommended
-to skim this section just to see an example of what valid data looks
-like, as well as how all the pieces fit together.
+If you would rather use the [browsable api](http://apiary.plenar.io/api/), it's
+still recommended to skim this section just to see an example of what valid
+data looks like, as well as how all the pieces fit together.
 
 
 ## Adding a network
