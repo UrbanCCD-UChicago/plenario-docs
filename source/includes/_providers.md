@@ -22,7 +22,7 @@ data looks like, as well as how all the pieces fit together.
 **`POST /api/networks/?format=vnd.api%2Bjson`**
 
 ```bash
-curl "http://localhost:8000/api/networks/?format=vnd.api%2Bjson" \
+curl "http://apiary.plenar.io/api/networks/?format=vnd.api%2Bjson" \
   --user username:password \
   --data "name=mysensornetwork&info={}"
 ```
@@ -42,7 +42,7 @@ skip this section.
 **`POST /api/features/?format=vnd.api%2Bjson`**
 
 ```bash
-curl "http://localhost:8000/api/features/?format=vnd.api%2Bjson" \
+curl "http://apiary.plenar.io/api/features/?format=vnd.api%2Bjson" \
   --user username:password \
   --data 'name=sound&observed_properties=[
       {"name": "intensity", "type": "double precision"},
@@ -68,7 +68,7 @@ Values for the type key must be an accepted [Redshift data type](http://docs.aws
 **`POST /api/sensors/?format=vnd.api%2Bjson`**
 
 ```bash
-curl "http://localhost:8000/api/sensors/?format=vnd.api%2Bjson" \
+curl "http://apiary.plenar.io/api/sensors/?format=vnd.api%2Bjson" \
   --user username:password \
   --data 'name=snd3000&observed_properties={
       "dur": "sound.duration",
@@ -92,7 +92,7 @@ be queried alongside any other sensor that also reports sound values.
 **`POST /api/nodes/?format=vnd.api%2Bjson`**
 
 ```bash
-curl "http://localhost:8000/api/nodes/?format=vnd.api%2Bjson" \
+curl "http://apiary.plenar.io/api/nodes/?format=vnd.api%2Bjson" \
   --user username:password \
   --data "id=mynode2&sensor_network=plenario_development&info={}\
     &sensors=snd3000&sensors=tmp112&location={\
