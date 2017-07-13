@@ -1,163 +1,115 @@
 ## Streaming Data Queries
 
-> **Data Event**
+> **Data Event Format**
 
 ```json
 {
-    "datetime": "2017-03-03T22:38:27", 
-    "feature": "temperature", 
-    "meta_id": 0.0, 
-    "node": "0000001e0610ba72", 
-    "results": {
-        "internal_temperature": null, 
-        "temperature": 23.15
-    }, 
-    "sensor": "tmp112"
+  "type": "sensorObservations",
+  "attributes": {
+    "sensor": "hih4030",
+    "node": "0000001e0610ba89",
+    "network": "array_of_things_chicago",
+    "datetime": "2017-07-13 17:14:35",
+    "meta_id": 0,
+    "feature": "relative_humidity",
+    "properties": {
+      "humidity": 431
+    }
+  }
 }
 ```
 
-Plenario uses the [pusher](https://github.com/socketio/socket.io-protocol) 
-service to provide near real-time streaming of sensor data. A user may open 
-sockets which specify the observations they're interested in. Plenario will 
-push  observations that correspond their socket. 
+Plenario uses the [socket.io protocol](https://github.com/socketio/socket.io-protocol) to provide near real-time streaming of sensor data.
+A user may open a socket and specify nodes, features of interest, and sensors they're interested in.
+Plenario will push observations that satisfies their filters to their socket.
+If no parameters are specified, the default is to stream all data from the array_of_things network.
 
-Any invalid parameters and other errors cause the connection attempt to be
-rejected with a `403`. If all parameters are valid and no errors occur, the 
-client will begin receiving `data` events from the socket.
+Any invalid parameters and other errors will be emitted as JSON `internal_error` events and no connection will be created. If all parameters are valid and no errors occur, the client will begin receiving `data` events from the socket.
 
-<aside class="info">
-    If you're unsure of whether or not your parameters are allowed, try 
-    validating them with the <a href="/#validation">check</a> endpoint first.
-</aside>
+> Start a socket client that will print any `internal_error` and all temperature `data` events from the HTU21D sensor on nodes 00A and 00B
 
-## -- Connecting to a socket
-
-> **Node.js** ([pusher-client](https://www.npmjs.com/package/pusher-client))
-
-> Subscribe to all nodes in the array_of_things_chicago network
+> **Sample Node.js client** using the [socket.io-client](http://socket.io/docs/) module
 
 ```javascript
-var Pusher = require('pusher-client');
+var socket = require('socket.io-client')('ws://streaming.plenar.io?' +
+    'sensor_network=array_of_things&' +
+    'features=temperature&' +
+    'nodes=00A,00B&' +
+    'sensors=HTU21D');
 
-var pusher = new Pusher(PLENARIO_KEY, { 
-    authEndpoint: PLENARIO_AUTH 
+socket.on('data', function (data) {
+    console.log(data);
 });
-
-var channel = pusher.subscribe('private-array_of_things_chicago');
-
-channel.bind('data', function(e) {
-    console.log(e);
+socket.on('internal_error', function (err) {
+    console.log(err);
 });
 ```
 
-| **Variable**      | **Value**                                                          |
-| ----------------- | ------------------------------------------------------------------ |
-| **PLENARIO_KEY**  | c6851f0950381b69a136                                               |
-| **PLENARIO_AUTH** | https://gm76b1jzz1.execute-api.us-east-1.amazonaws.com/development |
-
-To get started with streaming, install the client library for your
-respective language and copy over the client code. Plug in the values
-provided above for the `PLENARIO_KEY` and `PLENARIO_AUTH` variables.
-
-<aside class="info">
-    Don't see your favorite language? There are alot more client libraries
-    available <a href="https://pusher.com/docs/libraries">here</a>.
-</aside>
-
-## -- Connecting to a socket (without a pusher client library)
-
-> **Python 3.5** ([websockets](https://github.com/aaugustin/websockets))
+> **Sample Python client** using the [socketIO-client](https://pypi.python.org/pypi/socketIO-client) package
 
 ```python
-import asyncio
 import json
-import requests
-import websockets
+from socketIO_client import SocketIO
 
-pusher_uri = "ws://ws.pusherapp.com:80/app/{}?client=MyClient&version=4.0&protocol=6".format(PLENARIO_KEY)
+socketIO = SocketIO("streaming.plenar.io", params={
+    'sensor_network': 'array_of_things',
+    'features': 'temperature',
+    'sensors': ['HTU21D'],
+    'nodes': ['00A', '00B']})
 
-async def listen():
+def on_data(data):
+    print json.dumps(data)
 
-    async with websockets.connect(pusher_uri) as websocket:
+def on_error(err):
+    print json.dumps(err)
 
-        # Get your socket id from pusher
-        pusher_response = json.loads(await websocket.recv())
-        socket_id = json.loads(pusher_response["data"])["socket_id"]
-
-        # Get an authorization key from plenario
-        channel_name = "private-array_of_things_chicago;;;temperature"
-        response = requests.post(PLENARIO_AUTH, data="socket_id={}&channel_name={}".format(socket_id, channel_name))
-        auth = response.json()["auth"]
-
-        # Subscribe to your desired channel
-        await websocket.send(
-            json.dumps({
-                "event": "pusher:subscribe", 
-                "data": {
-                    "channel": channel_name, 
-                    "auth": auth
-                }
-            })
-        )
-        
-        while True:
-            print(await websocket.recv())
-
-asyncio.get_event_loop().run_until_complete(listen())
+socketIO.on('data', on_data)
+socketIO.on('internal_error', on_error)
+socketIO.wait()
 ```
 
-Subscribing to pusher can also be done with any websocket client. 
+> **Sample Java client** using the [socket.io-client-java](https://github.com/socketio/socket.io-client-java) package
 
-## -- Filtering socket observations
+```java
+import io.socket.client.*;
+import io.socket.emitter.*;
+import org.json.JSONObject;
 
-> Allow all observations in the array_of_things_chicago network
+public class Main {
 
-```
-private-array_of_things_chicago
-```
+    public static void main(String[] args) throws Exception {
 
-> Allow node 0000001e0610ba72 observations in the array_of_things_chicago_network
+        final Socket socket = IO.socket("http://streaming.plenar.io?sensor_network=array_of_things");
+        socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 
-```
-private-array_of_things_chicago;0000001e0610ba72
-```
+            @Override
+            public void call(Object... args) {}
 
-> Allow tmp112 sensor observations on node 0000001e0610b9e7 in the array_of_things_chicago_network
+        }).on("data", new Emitter.Listener() {
 
-```
-private-array_of_things_chicago;0000001e0610b9e7;tmp112
-```
+            @Override
+            public void call(Object... args) {
+                JSONObject observation = (JSONObject)args[0];
+                System.out.println(observation);
+            }
 
-> Allow atmospheric pressure observations from the bmp180 sensor in the array_of_things_chicago_network
+        }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
 
-```
-private-array_of_things_chicago;0000001e0610b9e7;bmp180;atmospheric_pressure
-```
+            @Override
+            public void call(Object... args) {}
 
-> Allow temperature observations from ANY sensor on the 0000001e0610b9e7 node
-in the array_of_things_chicago_network (NOTE the ';;')
-
-```
-private-array_of_things_chicago;0000001e0610b9e7;;temperature
-```
-
-> Allow temperature observations from ANY sensor on ANY node
-in the array_of_things_chicago_network (NOTE the ';;'s)
+        });
+        socket.connect();
+    }
+}
 
 ```
-private-array_of_things_chicago;;;temperature
-```
 
-> Allow ANY observation from the bmp180 sensor on ANY node
-in the array_of_things_chicago_network (NOTE the ';;')
+### Common Query Syntax
 
-```
-private-array_of_things_chicago;;bmp180
-```
-
-Observations are filtered by the name of your channel. You can filter
-on any combination of sensor network aspects. The channel name format
-is as follows: `private-<NETWORK>;<NODE>;<SENSOR>;<FEATURE>` where network 
-is mandatory. If the channel name is improperly formatted or contains
-values which do not exist - a `403` will be returned and you will not
-be subscribed.
+|**Parameter Name**                      | **Required?** | **Default**                         |
+| -------------------------------------- | ------------- | ----------------------------------- |
+| [**sensor_network**](#sensor-networks) | yes           | none                                |
+| [**nodes**](#nodes)                    | no            | all nodes in network                |
+| [**sensors**](#sensors)                | no            | all sensors in network              |
+| [**features**](#features-of-interest)  | no            | all features reported on by network |
