@@ -32,7 +32,7 @@ Any invalid parameters and other errors will be emitted as JSON `internal_error`
 
 ```javascript
 var socket = require('socket.io-client')('ws://streaming.plenar.io?' +
-    'sensor_network=array_of_things&' +
+    'network=array_of_things&' +
     'features=temperature&' +
     'nodes=00A,00B&' +
     'sensors=HTU21D');
@@ -52,7 +52,7 @@ import json
 from socketIO_client import SocketIO
 
 socketIO = SocketIO("streaming.plenar.io", params={
-    'sensor_network': 'array_of_things',
+    'network': 'array_of_things',
     'features': 'temperature',
     'sensors': ['HTU21D'],
     'nodes': ['00A', '00B']})
@@ -79,7 +79,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        final Socket socket = IO.socket("http://streaming.plenar.io?sensor_network=array_of_things");
+        final Socket socket = IO.socket("http://streaming.plenar.io?network=array_of_things");
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 
             @Override
@@ -109,7 +109,7 @@ public class Main {
 
 |**Parameter Name**                      | **Required?** | **Default**                         |
 | -------------------------------------- | ------------- | ----------------------------------- |
-| [**sensor_network**](#sensor-networks) | yes           | none                                |
+| [**network**](#sensor-networks)        | yes           | none                                |
 | [**nodes**](#nodes)                    | no            | all nodes in network                |
 | [**sensors**](#sensors)                | no            | all sensors in network              |
 | [**features**](#features-of-interest)  | no            | all features reported on by network |
