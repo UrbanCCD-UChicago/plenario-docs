@@ -32,9 +32,9 @@ Any invalid parameters and other errors will be emitted as JSON `internal_error`
 
 ```javascript
 var socket = require('socket.io-client')('ws://streaming.plenar.io?' +
-    'network=array_of_things&' +
+    'network=array_of_things_chicago&' +
     'features=temperature&' +
-    'nodes=00A,00B&' +
+    'nodes=0000001e0610ba89' +
     'sensors=HTU21D');
 
 socket.on('data', function (data) {
@@ -52,16 +52,16 @@ import json
 from socketIO_client import SocketIO
 
 socketIO = SocketIO("streaming.plenar.io", params={
-    'network': 'array_of_things',
+    'network': 'array_of_things_chicago',
     'features': 'temperature',
     'sensors': ['HTU21D'],
-    'nodes': ['00A', '00B']})
+    'nodes': ['0000001e0610ba89']})
 
 def on_data(data):
-    print json.dumps(data)
+    print(json.dumps(data))
 
 def on_error(err):
-    print json.dumps(err)
+    print(json.dumps(err))
 
 socketIO.on('data', on_data)
 socketIO.on('internal_error', on_error)
@@ -79,7 +79,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        final Socket socket = IO.socket("http://streaming.plenar.io?network=array_of_things");
+        final Socket socket = IO.socket("http://streaming.plenar.io?network=array_of_things_chicago");
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 
             @Override
