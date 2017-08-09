@@ -31,10 +31,10 @@ Any invalid parameters and other errors will be emitted as JSON `internal_error`
 > **Sample Node.js client** using the [socket.io-client](http://socket.io/docs/) module
 
 ```javascript
-var socket = require('socket.io-client')('ws://streaming.plenar.io?' +
+var socket = require('socket.io-client')('http://streaming.plenar.io?' +
     'network=array_of_things_chicago&' +
     'features=temperature&' +
-    'nodes=0000001e0610ba89' +
+    'nodes=0000001e0610ba89&' +
     'sensors=HTU21D');
 
 socket.on('data', function (data) {
