@@ -90,7 +90,7 @@ http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/query?feature=te
 > All below freezing temperature readings from array_of_things_chicago network in the last 1 day
 
 ```
-http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/query?feature=temperature&filter={"prop": "temperature", "val": "0", "op": "le"}
+http://plenar.io/v1/api/sensor-networks/array_of_things_chicago/query?feature=temperature&filter={"col": "temperature", "val": "0", "op": "le"}
 ```
 
 ```json
